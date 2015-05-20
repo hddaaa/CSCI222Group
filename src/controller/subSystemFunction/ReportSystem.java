@@ -19,12 +19,10 @@ import java.util.List;
  */
 public class ReportSystem {
     public CustomerReport getCustomerReport(String customerEmail) {
-        CustomerDao customerDao = new CustomerDao();
         try {
 
-            Customer customer = customerDao.getCustomerByEmail(customerEmail);
-            TicketDao ticketDao = new TicketDao();
-            List<Ticket> tickets = ticketDao.getAllTicketFormACustomer(customer.getId());
+            Customer customer = CustomerDao.getCustomerByEmail(customerEmail);
+            List<Ticket> tickets = TicketDao.getAllTicketFormACustomer(customer.getId());
             int tCost = 0, fCost = 0, sCost = 0;
             for (Ticket ticket : tickets) {
                 tCost += ticket.getTotal();
@@ -44,12 +42,9 @@ public class ReportSystem {
     }
 
     public AgentReport getAgentReport(String agentEmail) {
-        AgentDao agentDao = new AgentDao();
-
         try {
-            Agent agent = agentDao.getAgentByEmail(agentEmail);
-            TicketDao ticketDao = new TicketDao();
-            List<Ticket> tickets = ticketDao.getAllTicketFormAgent(agent.getId());
+            Agent agent = AgentDao.getAgentByEmail(agentEmail);
+            List<Ticket> tickets = TicketDao.getAllTicketFormAgent(agent.getId());
             int tCost = 0, fCost = 0, sCost = 0;
             for (Ticket ticket : tickets) {
                 tCost += ticket.getTotal();
@@ -62,8 +57,7 @@ public class ReportSystem {
             agentReport.setFlightCost(fCost);
             agentReport.setServiceCost(sCost);
 
-            CustomerDao customerDao = new CustomerDao();
-            List<Customer> customers = customerDao.getCustomersByAgent(agent.getName());
+            List<Customer> customers = CustomerDao.getCustomersByAgent(agent.getName());
             agentReport.setCustomerNum(customers.size());
             return agentReport;
         } catch (DataNotFoundException e) {
@@ -73,13 +67,10 @@ public class ReportSystem {
     }
 
     public PassengerReport getPassengerReport() {
-        CustomerDao customerDao = new CustomerDao();
         try {
-            List<Entity> customers = customerDao.getAllEntity();
-            Customer customer = null;
+            List<Customer> customers = CustomerDao.getAllCustomer();
             int isNoFluNum = 0, passportHolder = 0, pWithoutA = 0;
-            for (Entity entity : customers) {
-                customer = (Customer) entity;
+            for (Customer customer : customers) {
                 if (customer.getIsFly() == null | customer.getIsFly().equals("")) {
                     isNoFluNum++;
                 }

@@ -1,7 +1,6 @@
 package model.dao;
 
 import model.entity.Customer;
-import model.entity.Entity;
 import util.DB.DBConnection;
 import util.common.DataNotFoundException;
 
@@ -15,9 +14,9 @@ import java.util.List;
 /**
  * Created by hdd on 13/05/15.
  */
-public class CustomerDao implements DaoInterface {
-    @Override
-    public Entity getEntity(int id) throws DataNotFoundException {
+public class CustomerDao{
+    
+    public static Customer getCustomer(int id) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM customer WHERE id=? ";
@@ -50,10 +49,10 @@ public class CustomerDao implements DaoInterface {
             e.printStackTrace();
 
         }
-        throw new DataNotFoundException("CustomerDao: getEntity");
+        throw new DataNotFoundException("CustomerDao: getCustomer");
     }
 
-    public Customer getCustomerByEmail(String email) throws DataNotFoundException {
+    public static Customer getCustomerByEmail(String email) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM customer WHERE email=? ";
@@ -86,17 +85,17 @@ public class CustomerDao implements DaoInterface {
             e.printStackTrace();
 
         }
-        throw new DataNotFoundException("CustomerDao: getEntity");
+        throw new DataNotFoundException("CustomerDao: getCustomer");
     }
 
-    @Override
-    public List<Entity> getAllEntity() throws DataNotFoundException {
+    
+    public static List<Customer> getAllCustomer() throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM customer";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
-            List<Entity> list = new ArrayList<Entity>();
+            List<Customer> list = new ArrayList<Customer>();
             while (rs.next()) {
                 Customer customer = new Customer();
                 customer.setId(rs.getInt("id"));
@@ -120,7 +119,7 @@ public class CustomerDao implements DaoInterface {
                 list.add(customer);
             }
             if (list.isEmpty()) {
-                throw new DataNotFoundException("CustomerDao: getAllEntity");
+                throw new DataNotFoundException("CustomerDao: getAllCustomer");
             }
             return list;
         } catch (SQLException e) {
@@ -129,7 +128,7 @@ public class CustomerDao implements DaoInterface {
         }
     }
 
-    public List<Customer> getCustomersByAgent(String agentName) throws DataNotFoundException {
+    public static List<Customer> getCustomersByAgent(String agentName) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM customer WHERE Travel_Agent=?";
@@ -160,7 +159,7 @@ public class CustomerDao implements DaoInterface {
                 list.add(customer);
             }
             if (list.isEmpty()) {
-                throw new DataNotFoundException("CustomerDao: getAllEntity");
+                throw new DataNotFoundException("CustomerDao: getAllCustomer");
             }
             return list;
         } catch (SQLException e) {
@@ -169,13 +168,12 @@ public class CustomerDao implements DaoInterface {
         }
     }
 
-    @Override
-    public void addEntity(Entity entity) {
+    
+    public static void addCustomer(Customer customer) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "INSERT INTO customer (title,first_name,last_name,gender,DOB,Phone,email,street_address,state,city,country,credit_card_type,credit_card_#,frequent_flier_points_,passport_holder,is_fly,Travel_Agent) VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Customer customer = (Customer) entity;
             preparedStatement.setString(1, customer.getTitle());
             preparedStatement.setString(2, customer.getFirstName());
             preparedStatement.setString(3, customer.getLastName());
@@ -199,8 +197,8 @@ public class CustomerDao implements DaoInterface {
         }
     }
 
-    @Override
-    public boolean delEntity(int id) {
+    
+    public static boolean delCustomer(int id) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "DELETE FROM customer WHERE id=?";
@@ -216,13 +214,12 @@ public class CustomerDao implements DaoInterface {
         return false;
     }
 
-    @Override
-    public boolean updateEntity(Entity entity) {
+    
+    public static boolean updateCustomer(Customer customer) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "UPDATE customer SET title=?,first_name=?,last_name=?,gender=?,DOB=?,Phone=?,email=?,street_address=?,state=?,city=?,country=?,credit_card_type=?,credit_card_#=?,frequent_flier_points_=?,passport_holder=?,is_fly=?,Travel_Agent=? WHERE id=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Customer customer = (Customer) entity;
             preparedStatement.setString(1, customer.getTitle());
             preparedStatement.setString(2, customer.getFirstName());
             preparedStatement.setString(3, customer.getLastName());

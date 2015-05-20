@@ -1,6 +1,5 @@
 package model.dao;
 
-import model.entity.Entity;
 import model.entity.Service;
 import util.DB.DBConnection;
 import util.common.DataNotFoundException;
@@ -15,9 +14,8 @@ import java.util.List;
 /**
  * Created by hdd on 13/05/15.
  */
-public class ServiceDao implements DaoInterface {
-    @Override
-    public Entity getEntity(int id) throws DataNotFoundException {
+public class ServiceDao {
+    public static Service getService(int id) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM sevice WHERE id=?";
@@ -37,15 +35,15 @@ public class ServiceDao implements DaoInterface {
             e.printStackTrace();
             return null;
         }
-        throw new DataNotFoundException("ServiceDao: getEntity");
+        throw new DataNotFoundException("ServiceDao: getService");
     }
 
-    @Override
-    public List<Entity> getAllEntity() {
+    
+    public static List<Service> getAllService() {
         return null;
     }
 
-    public List<Service> getServicesInATicket(int ticketId) throws DataNotFoundException {
+    public static List<Service> getServicesInATicket(int ticketId) throws DataNotFoundException {
 
         Connection conn = DBConnection.getConn();
         try {
@@ -72,7 +70,7 @@ public class ServiceDao implements DaoInterface {
         }
     }
 
-    public List<Service> getServicesInACustomer(int customerId) throws DataNotFoundException {
+    public static List<Service> getServicesInACustomer(int customerId) throws DataNotFoundException {
 
         Connection conn = DBConnection.getConn();
         try {
@@ -100,13 +98,12 @@ public class ServiceDao implements DaoInterface {
     }
 
 
-    @Override
-    public void addEntity(Entity entity) {
+    
+    public static void addService(Service service) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "INSERT INTO service (ticketId,customerId,item,cost) VALUE (?,?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Service service = (Service) entity;
             preparedStatement.setInt(1, service.getTicketId());
             preparedStatement.setInt(2, service.getCustomerId());
             preparedStatement.setString(3, service.getItem());
@@ -117,8 +114,8 @@ public class ServiceDao implements DaoInterface {
         }
     }
 
-    @Override
-    public boolean delEntity(int id) {
+    
+    public static boolean delService(int id) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "DELETE FROM service WHERE id=?";
@@ -134,13 +131,12 @@ public class ServiceDao implements DaoInterface {
         return false;
     }
 
-    @Override
-    public boolean updateEntity(Entity entity) {
+    
+    public static boolean updateService(Service service) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "UPDATE service SET ticketId=?,customerId=?,item=?,cost=? WHERE id=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Service service = (Service) entity;
             preparedStatement.setInt(1, service.getTicketId());
             preparedStatement.setInt(2, service.getCustomerId());
             preparedStatement.setString(3, service.getItem());

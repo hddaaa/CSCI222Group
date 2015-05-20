@@ -1,6 +1,5 @@
 package model.dao;
 
-import model.entity.Entity;
 import model.entity.Route;
 import util.DB.DBConnection;
 import util.common.DataNotFoundException;
@@ -15,9 +14,9 @@ import java.util.List;
 /**
  * Created by hdd on 13/05/15.
  */
-public class RouteDao implements DaoInterface {
-    @Override
-    public Entity getEntity(int id) throws DataNotFoundException {
+public class RouteDao{
+    
+    public static Route getRoute(int id) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM route WHERE id=?";
@@ -40,17 +39,17 @@ public class RouteDao implements DaoInterface {
             e.printStackTrace();
             return null;
         }
-        throw new DataNotFoundException("RouteDao: getEntity");
+        throw new DataNotFoundException("RouteDao: getRoute");
     }
 
-    @Override
-    public List<Entity> getAllEntity() throws DataNotFoundException {
+    
+    public static List<Route> getAllRoute() throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM route";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
-            List<Entity> list = new ArrayList<Entity>();
+            List<Route> list = new ArrayList<Route>();
             while (rs.next()) {
                 Route route = new Route();
                 route.setId(rs.getInt("id"));
@@ -64,7 +63,7 @@ public class RouteDao implements DaoInterface {
                 list.add(route);
             }
             if (list.isEmpty())
-                throw new DataNotFoundException("RouteDao: getAllEntity");
+                throw new DataNotFoundException("RouteDao: getAllRoute");
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,7 +71,7 @@ public class RouteDao implements DaoInterface {
         }
     }
 
-    public Route getRoute(String sourceCode, String destinationCode) throws DataNotFoundException {
+    public static Route getRoute(String sourceCode, String destinationCode) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM route WHERE Source_airport=? AND Destination_airport=?";
@@ -98,13 +97,12 @@ public class RouteDao implements DaoInterface {
         throw new DataNotFoundException("RouteDao: getRoute");
     }
 
-    @Override
-    public void addEntity(Entity entity) {
+    
+    public static void addRoute(Route route) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "INSERT INTO route (Source_airport,Destination_airport,Codeshare,Stops) VALUE (?,?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Route route = (Route) entity;
             preparedStatement.setString(1, route.getSourceAirport());
             preparedStatement.setString(2, route.getDestinationAirport());
             if (route.isCodeShared())
@@ -119,8 +117,8 @@ public class RouteDao implements DaoInterface {
         }
     }
 
-    @Override
-    public boolean delEntity(int id) {
+    
+    public static boolean delRoute(int id) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "DELETE FROM route WHERE id=?";
@@ -136,13 +134,12 @@ public class RouteDao implements DaoInterface {
         return false;
     }
 
-    @Override
-    public boolean updateEntity(Entity entity) {
+    
+    public static boolean updateRoute(Route route) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "UPDATE route SET Source_airport=?,Destination_airport=?,Codeshare=?,Stops=? WHERE id=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Route route = (Route) entity;
             preparedStatement.setString(1, route.getSourceAirport());
             preparedStatement.setString(2, route.getDestinationAirport());
             if (route.isCodeShared())

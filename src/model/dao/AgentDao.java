@@ -1,7 +1,6 @@
 package model.dao;
 
 import model.entity.Agent;
-import model.entity.Entity;
 import util.DB.DBConnection;
 import util.common.DataNotFoundException;
 
@@ -15,9 +14,9 @@ import java.util.List;
 /**
  * Created by hdd on 13/05/15.
  */
-public class AgentDao implements DaoInterface {
-    @Override
-    public Entity getEntity(int id) throws DataNotFoundException {
+public class AgentDao  {
+    
+    public static Agent getAgent(int id) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM agent WHERE id=? ";
@@ -35,11 +34,11 @@ public class AgentDao implements DaoInterface {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new DataNotFoundException("agentDao: getEntity");
+        throw new DataNotFoundException("agentDao: getAgent");
 
     }
 
-    public Agent getAgentByEmail(String email) throws DataNotFoundException {
+    public static Agent getAgentByEmail(String email) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM agent WHERE Email=? ";
@@ -57,18 +56,17 @@ public class AgentDao implements DaoInterface {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new DataNotFoundException("agentDao: getEntity");
+        throw new DataNotFoundException("agentDao: getAgent");
 
     }
 
-    @Override
-    public List<Entity> getAllEntity() throws DataNotFoundException {
+    public static List<Agent> getAllAgent() throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM agent";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
-            List<Entity> list = new ArrayList<Entity>();
+            List<Agent> list = new ArrayList<Agent>();
             while (rs.next()) {
                 Agent agent = new Agent();
                 agent.setId(rs.getInt("id"));
@@ -78,7 +76,7 @@ public class AgentDao implements DaoInterface {
                 list.add(agent);
             }
             if (list.isEmpty())
-                throw new DataNotFoundException("agentDao: getAllEntity");
+                throw new DataNotFoundException("agentDao: getAllAgent");
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,13 +84,12 @@ public class AgentDao implements DaoInterface {
         }
     }
 
-    @Override
-    public void addEntity(Entity entity) {
+    
+    public static void addAgent(Agent agent) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "INSERT INTO agent (name,phone,email) VALUE (?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Agent agent = (Agent) entity;
             preparedStatement.setString(1, agent.getName());
             preparedStatement.setString(2, agent.getPhone());
             preparedStatement.setString(3, agent.getEmail());
@@ -103,8 +100,8 @@ public class AgentDao implements DaoInterface {
         return;
     }
 
-    @Override
-    public boolean delEntity(int id) {
+    
+    public static boolean delAgent(int id) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "DELETE FROM agent WHERE id=?";
@@ -120,13 +117,13 @@ public class AgentDao implements DaoInterface {
         return false;
     }
 
-    @Override
-    public boolean updateEntity(Entity entity) {
+    
+    public static boolean updateAgent(Agent agent) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "UPDATE agent SET name=?,phone=?,email=? WHERE id=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Agent agent = (Agent) entity;
+
             preparedStatement.setString(1, agent.getName());
             preparedStatement.setString(2, agent.getPhone());
             preparedStatement.setString(3, agent.getEmail());

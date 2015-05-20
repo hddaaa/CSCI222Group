@@ -1,6 +1,5 @@
 package model.dao;
 
-import model.entity.Entity;
 import model.entity.ServiceInventory;
 import util.DB.DBConnection;
 import util.common.DataNotFoundException;
@@ -15,9 +14,9 @@ import java.util.List;
 /**
  * Created by hdd on 13/05/15.
  */
-public class ServiceInventoryDao implements DaoInterface {
-    @Override
-    public Entity getEntity(int id) throws DataNotFoundException {
+public class ServiceInventoryDao{
+    
+    public static ServiceInventory getServiceInventory(int id) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM serviceInventory WHERE id=?";
@@ -36,17 +35,17 @@ public class ServiceInventoryDao implements DaoInterface {
             e.printStackTrace();
             return null;
         }
-        throw new DataNotFoundException("ServiceInventoryDao: getEntity");
+        throw new DataNotFoundException("ServiceInventoryDao: getServiceInventory");
     }
 
-    @Override
-    public List<Entity> getAllEntity() throws DataNotFoundException {
+    
+    public static List<ServiceInventory> getAllServiceInventory() throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM serviceInventory";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
-            List<Entity> list = new ArrayList<Entity>();
+            List<ServiceInventory> list = new ArrayList<ServiceInventory>();
             while (rs.next()) {
                 ServiceInventory serviceInventory = new ServiceInventory();
                 serviceInventory.setId(rs.getInt("id"));
@@ -56,7 +55,7 @@ public class ServiceInventoryDao implements DaoInterface {
                 list.add(serviceInventory);
             }
             if (list.isEmpty())
-                throw new DataNotFoundException("ServiceInventoryDao: getAllEntity");
+                throw new DataNotFoundException("ServiceInventoryDao: getAllServiceInventory");
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,7 +63,7 @@ public class ServiceInventoryDao implements DaoInterface {
         }
     }
 
-    public List<ServiceInventory> getServicesByAvailable(String ava) throws DataNotFoundException {
+    public static List<ServiceInventory> getServicesByAvailable(String ava) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM serviceInventory WHERE Availability=?";
@@ -81,7 +80,7 @@ public class ServiceInventoryDao implements DaoInterface {
                 list.add(serviceInventory);
             }
             if (list.isEmpty())
-                throw new DataNotFoundException("ServiceInventoryDao: getAllEntity");
+                throw new DataNotFoundException("ServiceInventoryDao: getAllServiceInventory");
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -90,13 +89,12 @@ public class ServiceInventoryDao implements DaoInterface {
     }
 
 
-    @Override
-    public void addEntity(Entity entity) {
+    
+    public static void addServiceInventory(ServiceInventory serviceInventory) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "INSERT INTO serviceInventory (Item,Cost_AU,Availability) VALUE (?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            ServiceInventory serviceInventory = (ServiceInventory) entity;
             preparedStatement.setString(1, serviceInventory.getItem());
             preparedStatement.setInt(2, serviceInventory.getCost());
             preparedStatement.setString(3, serviceInventory.getAvailability());
@@ -106,8 +104,8 @@ public class ServiceInventoryDao implements DaoInterface {
         }
     }
 
-    @Override
-    public boolean delEntity(int id) {
+    
+    public static boolean delServiceInventory(int id) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "DELETE FROM serviceInventory WHERE id=?";
@@ -123,13 +121,12 @@ public class ServiceInventoryDao implements DaoInterface {
         return false;
     }
 
-    @Override
-    public boolean updateEntity(Entity entity) {
+    
+    public static boolean updateServiceInventory(ServiceInventory serviceInventory) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "UPDATE serviceInventory SET Item=?,Cost_AU=?,Availability=? WHERE id=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            ServiceInventory serviceInventory = (ServiceInventory) entity;
             preparedStatement.setString(1, serviceInventory.getItem());
             preparedStatement.setInt(2, serviceInventory.getCost());
             preparedStatement.setString(3, serviceInventory.getAvailability());

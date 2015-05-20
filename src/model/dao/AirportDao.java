@@ -1,7 +1,6 @@
 package model.dao;
 
 import model.entity.Airport;
-import model.entity.Entity;
 import util.DB.DBConnection;
 import util.common.DataNotFoundException;
 
@@ -15,9 +14,9 @@ import java.util.List;
 /**
  * Created by hdd on 12/05/15.
  */
-public class AirportDao implements DaoInterface {
-    @Override
-    public Entity getEntity(int id) throws DataNotFoundException {
+public class AirportDao {
+    
+    public static Airport getAirport(int id) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM airport WHERE id=? ";
@@ -43,10 +42,10 @@ public class AirportDao implements DaoInterface {
             e.printStackTrace();
             return null;
         }
-        throw new DataNotFoundException("AirportDao: getEntity");
+        throw new DataNotFoundException("AirportDao: getAirport");
     }
 
-    public Airport getAirport(String cityCode) throws DataNotFoundException {
+    public static Airport getAirport(String cityCode) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM airport WHERE IATA_FAA=? ";
@@ -75,14 +74,14 @@ public class AirportDao implements DaoInterface {
         throw new DataNotFoundException("AirportDao: getAirport");
     }
 
-    @Override
-    public List<Entity> getAllEntity() throws DataNotFoundException {
+    
+    public static List<Airport> getAllAirport() throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM airport";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
-            List<Entity> list = new ArrayList<Entity>();
+            List<Airport> list = new ArrayList<Airport>();
             while (rs.next()) {
                 Airport airport = new Airport();
                 airport.setId(rs.getInt("id"));
@@ -99,7 +98,7 @@ public class AirportDao implements DaoInterface {
                 list.add(airport);
             }
             if (list.isEmpty())
-                throw new DataNotFoundException("AirportDao: getAllEntity");
+                throw new DataNotFoundException("AirportDao: getAllAirport");
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -107,13 +106,12 @@ public class AirportDao implements DaoInterface {
         return null;
     }
 
-    @Override
-    public void addEntity(Entity entity) {
+    
+    public static void addAirport(Airport airport) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "INSERT INTO airport (name,city,country,IATA_FAA,latitude,longitude,altitude,timezone,DST,database_timezon) VALUE (?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Airport airport = (Airport) entity;
             preparedStatement.setString(1, airport.getName());
             preparedStatement.setString(2, airport.getCity());
             preparedStatement.setString(3, airport.getCountry());
@@ -130,8 +128,8 @@ public class AirportDao implements DaoInterface {
         }
     }
 
-    @Override
-    public boolean delEntity(int id) {
+    
+    public static boolean delAirport(int id) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "DELETE FROM airport WHERE id=?";
@@ -147,13 +145,12 @@ public class AirportDao implements DaoInterface {
         return false;
     }
 
-    @Override
-    public boolean updateEntity(Entity entity) {
+    
+    public static boolean updateAirport(Airport airport) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "UPDATE airport SET name=?,city=?,country=?,IATA_FAA=?,latitude=?,longitude=?,altitude=?,timezone=?,DST=?,database_timezon=? WHERE id=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Airport airport = (Airport) entity;
             preparedStatement.setString(1, airport.getName());
             preparedStatement.setString(2, airport.getCity());
             preparedStatement.setString(3, airport.getCountry());

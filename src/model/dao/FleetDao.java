@@ -1,6 +1,5 @@
 package model.dao;
 
-import model.entity.Entity;
 import model.entity.Fleet;
 import util.DB.DBConnection;
 import util.common.DataNotFoundException;
@@ -15,9 +14,9 @@ import java.util.List;
 /**
  * Created by hdd on 13/05/15.
  */
-public class FleetDao implements DaoInterface {
-    @Override
-    public Entity getEntity(int id) throws DataNotFoundException {
+public class FleetDao {
+    
+    public static Fleet getFleet(int id) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM fleet WHERE id=?";
@@ -40,17 +39,17 @@ public class FleetDao implements DaoInterface {
             e.printStackTrace();
             return null;
         }
-        throw new DataNotFoundException("FleetDao: getEntity");
+        throw new DataNotFoundException("FleetDao: getFleet");
     }
 
-    @Override
-    public List<Entity> getAllEntity() throws DataNotFoundException {
+    
+    public static List<Fleet> getAllFleet() throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM fleet";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
-            List<Entity> list = new ArrayList<Entity>();
+            List<Fleet> list = new ArrayList<Fleet>();
             while (rs.next()) {
                 Fleet fleet = new Fleet();
                 fleet.setId(rs.getInt("id"));
@@ -64,7 +63,7 @@ public class FleetDao implements DaoInterface {
                 list.add(fleet);
             }
             if (list.isEmpty())
-                throw new DataNotFoundException("FleetDao: getAllEntity");
+                throw new DataNotFoundException("FleetDao: getAllFleet");
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,13 +71,12 @@ public class FleetDao implements DaoInterface {
         }
     }
 
-    @Override
-    public void addEntity(Entity entity) {
+    
+    public static void addFleet(Fleet fleet) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "INSERT INTO fleet (Aircraft,In_Service,FClass,BClass,PEClass,EClass,Total) VALUE (?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Fleet fleet = (Fleet) entity;
             preparedStatement.setString(1, fleet.getAircraft());
             preparedStatement.setInt(2, fleet.getInService());
             preparedStatement.setInt(3, fleet.getFClass());
@@ -93,8 +91,8 @@ public class FleetDao implements DaoInterface {
         return;
     }
 
-    @Override
-    public boolean delEntity(int id) {
+    
+    public static boolean delFleet(int id) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "DELETE FROM fleet WHERE id=?";
@@ -110,13 +108,12 @@ public class FleetDao implements DaoInterface {
         return false;
     }
 
-    @Override
-    public boolean updateEntity(Entity entity) {
+    
+    public static boolean updateFleet(Fleet fleet) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "UPDATE fleet SET Aircraft=?,In_Service=?,FClass=?,BClass=?,PEClass=?,EClass=?,Total=? WHERE id=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Fleet fleet = (Fleet) entity;
             preparedStatement.setString(1, fleet.getAircraft());
             preparedStatement.setInt(2, fleet.getInService());
             preparedStatement.setInt(3, fleet.getFClass());

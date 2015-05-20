@@ -1,6 +1,5 @@
 package model.dao;
 
-import model.entity.Entity;
 import model.entity.Ticket;
 import util.DB.DBConnection;
 import util.common.DataNotFoundException;
@@ -15,9 +14,9 @@ import java.util.List;
 /**
  * Created by hdd on 13/05/15.
  */
-public class TicketDao implements DaoInterface {
-    @Override
-    public Entity getEntity(int id) throws DataNotFoundException {
+public class TicketDao {
+
+    public static Ticket getTicket(int id) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM ticket WHERE id=?";
@@ -41,10 +40,10 @@ public class TicketDao implements DaoInterface {
             e.printStackTrace();
             return null;
         }
-        throw new DataNotFoundException("TicketDao: getEntity");
+        throw new DataNotFoundException("TicketDao: getTicket");
     }
 
-    public Ticket getTicket(int customerId, int scheduleId) throws DataNotFoundException {
+    public static Ticket getTicket(int customerId, int scheduleId) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM ticket WHERE customerId=? AND scheduleId=?";
@@ -72,12 +71,12 @@ public class TicketDao implements DaoInterface {
         throw new DataNotFoundException("TicketDao: getTicket");
     }
 
-    @Override
-    public List<Entity> getAllEntity() {
+
+    public static List<Ticket> getAllTicket() {
         return null;
     }
 
-    public List<Ticket> getAllTicketFormACustomer(int customerId) throws DataNotFoundException {
+    public static List<Ticket> getAllTicketFormACustomer(int customerId) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM ticket WHERE customerId=?";
@@ -107,7 +106,7 @@ public class TicketDao implements DaoInterface {
         }
     }
 
-    public List<Ticket> getAllTicketFormAgent(int agentId) throws DataNotFoundException {
+    public static List<Ticket> getAllTicketFormAgent(int agentId) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM ticket WHERE userId=?";
@@ -137,13 +136,12 @@ public class TicketDao implements DaoInterface {
         }
     }
 
-    @Override
-    public void addEntity(Entity entity) {
+
+    public static void addTicket(Ticket ticket) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "INSERT INTO ticket (customerId,username,scheduleId,fareClass,seat,flightCost,serviceCost,total) VALUE (?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Ticket ticket = (Ticket) entity;
             preparedStatement.setInt(1, ticket.getCustomerId());
             preparedStatement.setString(2, ticket.getUsername());
             preparedStatement.setInt(3, ticket.getScheduleId());
@@ -159,8 +157,8 @@ public class TicketDao implements DaoInterface {
         return;
     }
 
-    @Override
-    public boolean delEntity(int id) {
+
+    public static boolean delTicket(int id) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "DELETE FROM ticket WHERE id=?";
@@ -176,13 +174,12 @@ public class TicketDao implements DaoInterface {
         return false;
     }
 
-    @Override
-    public boolean updateEntity(Entity entity) {
+
+    public static boolean updateTicket(Ticket ticket) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "UPDATE ticket SET customerId=?,username=?,scheduleId=?,fareClass=?,seat=?,flightCost=?,serviceCost=?,total=? WHERE id=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Ticket ticket = (Ticket) entity;
             preparedStatement.setInt(1, ticket.getCustomerId());
             preparedStatement.setString(2, ticket.getUsername());
             preparedStatement.setInt(3, ticket.getScheduleId());

@@ -12,22 +12,17 @@ import java.util.*;
  */
 public class ReservationSystem {
     public static boolean register(Customer customer, User user, String pwd) {
-        CustomerDao customerDao = new CustomerDao();
-        customerDao.addEntity(customer);
-        UserDao userDao = new UserDao();
-        return userDao.register(user, pwd);
+        CustomerDao.addCustomer(customer);
+        return UserDao.register(user, pwd);
     }
 
     public static List searchSchedule(String sourceAirport, String destinationAirport, Date departureDate) {
         try {
-            AirportDao airportDao = new AirportDao();
-            Airport sAirport = airportDao.getAirport(sourceAirport);
-            Airport dAirport = airportDao.getAirport(destinationAirport);
+            Airport sAirport = AirportDao.getAirport(sourceAirport);
+            Airport dAirport = AirportDao.getAirport(destinationAirport);
 
-            RouteDao routeDao = new RouteDao();
-            Route route = routeDao.getRoute(sAirport.getIATA_FAA(), dAirport.getIATA_FAA());
-            ScheduleDao scheduleDao = new ScheduleDao();
-            List<Schedule> scheduleList = scheduleDao.getScheduleInRoute(route.getId());
+            Route route = RouteDao.getRoute(sAirport.getIATA_FAA(), dAirport.getIATA_FAA());
+            List<Schedule> scheduleList = ScheduleDao.getScheduleInRoute(route.getId());
             Calendar departureCal = Calendar.getInstance();
             Calendar scheduleCal = Calendar.getInstance();
             departureCal.setTime(departureDate);
@@ -51,8 +46,7 @@ public class ReservationSystem {
 
     public static Schedule scheduleDetail(int scheduleId) {
         try {
-            ScheduleDao scheduleDao = new ScheduleDao();
-            Schedule schedule = (Schedule) scheduleDao.getEntity(scheduleId);
+            Schedule schedule =  ScheduleDao.getSchedule(scheduleId);
             return schedule;
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -62,8 +56,7 @@ public class ReservationSystem {
 
     public static Fleet fleetDetail(int fleetId) {
         try {
-            FleetDao fleetDao = new FleetDao();
-            Fleet fleet = (Fleet) fleetDao.getEntity(fleetId);
+            Fleet fleet =  FleetDao.getFleet(fleetId);
             return fleet;
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -74,8 +67,8 @@ public class ReservationSystem {
     public static Route routeDetail(int routeId) {
 
         try {
-            RouteDao routeDao = new RouteDao();
-            Route route = (Route) routeDao.getEntity(routeId);
+
+            Route route =  RouteDao.getRoute(routeId);
             return route;
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -85,8 +78,7 @@ public class ReservationSystem {
 
     public static List<Integer> showEmptySeat(int scheduleId) {
         try {
-            SeatMapDao seatMapDao = new SeatMapDao();
-            SeatMap seatMap = (SeatMap) seatMapDao.getEntity(scheduleId);
+            SeatMap seatMap = SeatMapDao.getSeatMap(scheduleId);
             return seatMap.getMap();
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -95,19 +87,16 @@ public class ReservationSystem {
     }
 
     public static int getPrice(int scheduleId, String fareClass, String agentEmail) {
-        ScheduleDao scheduleDao = new ScheduleDao();
-        RouteDao routeDao = new RouteDao();
-        AirportDao airportDao = new AirportDao();
-        AgentDao agentDao = new AgentDao();
+
         try {
             Agent agent = null;
             if (!agentEmail.isEmpty()) {
-                agent = agentDao.getAgentByEmail(agentEmail);
+                agent = AgentDao.getAgentByEmail(agentEmail);
             }
-            Schedule schedule = (Schedule) scheduleDao.getEntity(scheduleId);
-            Route route = (Route) routeDao.getEntity(schedule.getRoute());
-            Airport sourceAirport = airportDao.getAirport(route.getSourceAirport());
-            Airport destinationPort = airportDao.getAirport(route.getDestinationAirport());
+            Schedule schedule =  ScheduleDao.getSchedule(scheduleId);
+            Route route = RouteDao.getRoute(schedule.getRoute());
+            Airport sourceAirport = AirportDao.getAirport(route.getSourceAirport());
+            Airport destinationPort = AirportDao.getAirport(route.getDestinationAirport());
             double lat1 = Float.parseFloat(sourceAirport.getLatitude());
             double lon1 = Float.parseFloat(sourceAirport.getLongitude());
             double lat2 = Float.parseFloat(destinationPort.getLatitude());
@@ -125,15 +114,13 @@ public class ReservationSystem {
     }
 
     public static Map<String, Integer> getPriceList(Route route, String agentEmail) {
-        AirportDao airportDao = new AirportDao();
-        AgentDao agentDao = new AgentDao();
         try {
             Agent agent = null;
             if (!agentEmail.isEmpty()) {
-                agent = agentDao.getAgentByEmail(agentEmail);
+                agent = AgentDao.getAgentByEmail(agentEmail);
             }
-            Airport sourceAirport = airportDao.getAirport(route.getSourceAirport());
-            Airport destinationPort = airportDao.getAirport(route.getDestinationAirport());
+            Airport sourceAirport = AirportDao.getAirport(route.getSourceAirport());
+            Airport destinationPort = AirportDao.getAirport(route.getDestinationAirport());
             double lat1 = Float.parseFloat(sourceAirport.getLatitude());
             double lon1 = Float.parseFloat(sourceAirport.getLongitude());
             double lat2 = Float.parseFloat(destinationPort.getLatitude());
@@ -156,11 +143,9 @@ public class ReservationSystem {
 
 
     public static Ticket ticketReservation(Ticket ticket) {
-        TicketDao ticketDao = new TicketDao();
-        ticketDao.addEntity(ticket);
-        SeatMapDao seatMapDao = new SeatMapDao();
+        TicketDao.addTicket(ticket);
         try {
-            SeatMap seatMap = (SeatMap) seatMapDao.getEntity(ticket.getScheduleId());
+            SeatMap seatMap =  SeatMapDao.getSeatMap(ticket.getScheduleId());
             List<Integer> map = seatMap.getMap();
             for (int i : map) {
                 if (i == ticket.getCustomerId())
@@ -183,14 +168,12 @@ public class ReservationSystem {
                 default:
                     System.out.println("Error: ReservationSystem - ticketReservation()");
             }
-            seatMapDao.updateEntity(seatMap);
+            SeatMapDao.updateSeatMap(seatMap);
         } catch (DataNotFoundException e) {
-            ScheduleDao scheduleDao = new ScheduleDao();
-            FleetDao fleetDao = new FleetDao();
             SeatMap seatMap = new SeatMap();
             try {
-                Schedule schedule = (Schedule) scheduleDao.getEntity(ticket.getScheduleId());
-                Fleet fleet = (Fleet) fleetDao.getEntity(schedule.getPlane());
+                Schedule schedule =  ScheduleDao.getSchedule(ticket.getScheduleId());
+                Fleet fleet = FleetDao.getFleet(schedule.getPlane());
                 seatMap.setfClassSpare(fleet.getFClass());
                 seatMap.setbClassSpare(fleet.getBClass());
                 seatMap.setPeClassSpare(fleet.getPEClass());
@@ -218,30 +201,21 @@ public class ReservationSystem {
             List map = new ArrayList();
             map.set(ticket.getSeat(), ticket.getCustomerId());
             seatMap.setMap(map);
-            seatMapDao.addEntity(seatMap);
+            SeatMapDao.addSeatMap(seatMap);
         }
         return ticket;
     }
 
     public static List<ServiceInventory> getServiceForSchedule(int scheduleId){
-        ScheduleDao scheduleDao = new ScheduleDao();
-        RouteDao routeDao = new RouteDao();
-        AirportDao airportDao = new AirportDao();
-        ServiceInventoryDao serviceInventoryDao = new ServiceInventoryDao();
         try {
-            Schedule schedule = (Schedule) scheduleDao.getEntity(scheduleId);
-            Route route = (Route) routeDao.getEntity(schedule.getRoute());
-            Airport sourceAirport = airportDao.getAirport(route.getSourceAirport());
-            Airport destinationAirport = airportDao.getAirport(route.getDestinationAirport());
+            Schedule schedule = ScheduleDao.getSchedule(scheduleId);
+            Route route = RouteDao.getRoute(schedule.getRoute());
+            Airport sourceAirport = AirportDao.getAirport(route.getSourceAirport());
+            Airport destinationAirport = AirportDao.getAirport(route.getDestinationAirport());
             if(sourceAirport.getCountry().equals(destinationAirport.getCountry())){
-                return serviceInventoryDao.getServicesByAvailable("all");
+                return ServiceInventoryDao.getServicesByAvailable("all");
             }else {
-                List<Entity> entityList =serviceInventoryDao.getAllEntity();
-                List<ServiceInventory> serviceInventories=new ArrayList<ServiceInventory>();
-                for(Entity entity : entityList){
-                    serviceInventories.add((ServiceInventory)entity);
-                }
-                return serviceInventories;
+                return ServiceInventoryDao.getAllServiceInventory();
             }
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -250,10 +224,6 @@ public class ReservationSystem {
     }
 
     public static Ticket serviceReservation(String[] serviceAndCostRow,Ticket ticket){
-        ServiceDao serviceDao = new ServiceDao();
-        TicketDao ticketDao = new TicketDao();
-
-
         for(String serviceAndCost : serviceAndCostRow){
             Service service = new Service();
             String[] str = serviceAndCost.split(",");
@@ -261,21 +231,20 @@ public class ReservationSystem {
             service.setCost(Integer.parseInt(str[1]));
             service.setTicketId(ticket.getId());
             service.setCustomerId(ticket.getCustomerId());
-            serviceDao.addEntity(service);
+            ServiceDao.addService(service);
             ticket.setServiceCost(ticket.getServiceCost() + Integer.parseInt(str[1]));
             ticket.setTotal(ticket.getFlightCost()+ticket.getServiceCost());
         }
 
-        if (ticketDao.updateEntity(ticket)==true)
+        if (TicketDao.updateTicket(ticket)==true)
         return ticket;
         else
             return null;
     }
 
     public static List<Integer> getSeatMap(int scheduleId){
-        SeatMapDao seatMapDao = new SeatMapDao();
         try {
-            SeatMap seatMap = (SeatMap) seatMapDao.getEntity(scheduleId);
+            SeatMap seatMap = SeatMapDao.getSeatMap(scheduleId);
             return seatMap.getMap();
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -283,13 +252,14 @@ public class ReservationSystem {
         return null;
     }
     public static Ticket changeSeat(Ticket ticket , int seatNum){
-        SeatMapDao seatMapDao = new SeatMapDao();
         try {
-            SeatMap seatMap = (SeatMap) seatMapDao.getEntity(ticket.getScheduleId());
+            SeatMap seatMap =  SeatMapDao.getSeatMap(ticket.getScheduleId());
             List<Integer> map = seatMap.getMap();
             map.set(seatNum,ticket.getCustomerId());
             map.set(ticket.getSeat(), 0);
+            seatMap.setMap(map);
             ticket.setSeat(seatNum);
+            SeatMapDao.updateSeatMap(seatMap);
             return ticket;
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -297,20 +267,18 @@ public class ReservationSystem {
         return null;
     }
     public static Ticket switchSeat(Ticket thisTicket , int seatNum){
-        SeatMapDao seatMapDao = new SeatMapDao();
-        TicketDao ticketDao = new TicketDao();
         try {
-            SeatMap seatMap = (SeatMap) seatMapDao.getEntity(thisTicket.getScheduleId());
+            SeatMap seatMap = SeatMapDao.getSeatMap(thisTicket.getScheduleId());
             List<Integer> map = seatMap.getMap();
-            Ticket otherTicket = ticketDao.getTicket(map.get(seatNum), thisTicket.getScheduleId());
+            Ticket otherTicket = TicketDao.getTicket(map.get(seatNum), thisTicket.getScheduleId());
             map.set(seatNum, thisTicket.getCustomerId());
             map.set(thisTicket.getSeat(), otherTicket.getCustomerId());
             seatMap.setMap(map);
-            seatMapDao.updateEntity(seatMap);
+            SeatMapDao.updateSeatMap(seatMap);
             otherTicket.setSeat(thisTicket.getSeat());
             thisTicket.setSeat(seatNum);
-            ticketDao.updateEntity(thisTicket);
-            ticketDao.updateEntity(otherTicket);
+            TicketDao.updateTicket(thisTicket);
+            TicketDao.updateTicket(otherTicket);
             return thisTicket;
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -319,40 +287,36 @@ public class ReservationSystem {
     }
 
     public static List<Service> getServiceList(int ticketId){
-        ServiceDao serviceDao= new ServiceDao();
         try {
-            return serviceDao.getServicesInATicket(ticketId);
+            return ServiceDao.getServicesInATicket(ticketId);
         } catch (DataNotFoundException e) {
             e.printStackTrace();
         }
         return null;
     }
     public static boolean deleteServiceReservation(int serviceId){
-        ServiceDao serviceDao = new ServiceDao();
-        return serviceDao.delEntity(serviceId);
+        return ServiceDao.delService(serviceId);
     }
     public static Ticket changeFlight(Ticket oldTicket,Ticket newTicket){
-        SeatMapDao seatMapDao = new SeatMapDao();
-        TicketDao ticketDao = new TicketDao();
-        ServiceDao serviceDao = new ServiceDao();
+
         try {
-            SeatMap oldSeatMap = (SeatMap) seatMapDao.getEntity(oldTicket.getScheduleId());
-            SeatMap newSeatMap = (SeatMap) seatMapDao.getEntity(newTicket.getScheduleId());
+            SeatMap oldSeatMap = SeatMapDao.getSeatMap(oldTicket.getScheduleId());
+            SeatMap newSeatMap = SeatMapDao.getSeatMap(newTicket.getScheduleId());
             List<Integer> oldMap = oldSeatMap.getMap();
             List<Integer> newMap = newSeatMap.getMap();
             oldMap.set(oldTicket.getSeat(),0);
             newMap.set(newTicket.getSeat(), newTicket.getCustomerId());
             oldSeatMap.setMap(oldMap);
             newSeatMap.setMap(newMap);
-            seatMapDao.updateEntity(oldSeatMap);
-            seatMapDao.updateEntity(newSeatMap);
-            List<Service> serviceList = serviceDao.getServicesInATicket(oldTicket.getId());
+            SeatMapDao.updateSeatMap(oldSeatMap);
+            SeatMapDao.updateSeatMap(newSeatMap);
+            List<Service> serviceList = ServiceDao.getServicesInATicket(oldTicket.getId());
             for(Service service : serviceList){
                 service.setTicketId(newTicket.getId());
-                serviceDao.updateEntity(service);
+                ServiceDao.updateService(service);
             }
-            ticketDao.delEntity(oldTicket.getId());
-            ticketDao.addEntity(newTicket);
+            TicketDao.delTicket(oldTicket.getId());
+            TicketDao.addTicket(newTicket);
             return newTicket;
         } catch (DataNotFoundException e) {
             e.printStackTrace();

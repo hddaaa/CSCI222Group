@@ -1,7 +1,6 @@
 package model.dao;
 
 import com.google.gson.Gson;
-import model.entity.Entity;
 import model.entity.SeatMap;
 import util.DB.DBConnection;
 import util.common.DataNotFoundException;
@@ -16,9 +15,9 @@ import java.util.List;
 /**
  * Created by hdd on 14/05/15.
  */
-public class SeatMapDao implements DaoInterface {
-    @Override
-    public Entity getEntity(int scheduleId) throws DataNotFoundException {
+public class SeatMapDao {
+    
+    public static SeatMap getSeatMap(int scheduleId) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM seatmap WHERE scheduleId=?";
@@ -43,17 +42,17 @@ public class SeatMapDao implements DaoInterface {
             e.printStackTrace();
             return null;
         }
-        throw new DataNotFoundException("SeatMapDao: getEntity");
+        throw new DataNotFoundException("SeatMapDao: getSeatMap");
     }
 
-    @Override
-    public List<Entity> getAllEntity() throws DataNotFoundException {
+    
+    public static List<SeatMap> getAllSeatMap() throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM seatmap";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
-            List<Entity> list = new ArrayList<Entity>();
+            List<SeatMap> list = new ArrayList<SeatMap>();
             while (rs.next()) {
                 SeatMap seatMap = new SeatMap();
                 seatMap.setId(rs.getInt("id"));
@@ -70,7 +69,7 @@ public class SeatMapDao implements DaoInterface {
                 list.add(seatMap);
             }
             if (list.isEmpty())
-                throw new DataNotFoundException("SeatMapDao: getAllEntity");
+                throw new DataNotFoundException("SeatMapDao: getAllSeatMap");
 
             return list;
         } catch (SQLException e) {
@@ -79,13 +78,12 @@ public class SeatMapDao implements DaoInterface {
         }
     }
 
-    @Override
-    public void addEntity(Entity entity) {
+    
+    public static void addSeatMap(SeatMap seatMap) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "INSERT INTO seatmap (scheduleId,map,fClass,bClass,peClass,eClass) VALUE (?,?,?,?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            SeatMap seatMap = (SeatMap) entity;
             Gson gson = new Gson();
             preparedStatement.setInt(1, seatMap.getScheduleId());
             preparedStatement.setString(2, gson.toJson(seatMap.getMap()));
@@ -99,8 +97,8 @@ public class SeatMapDao implements DaoInterface {
         }
     }
 
-    @Override
-    public boolean delEntity(int scheduleId) {
+    
+    public static boolean delSeatMap(int scheduleId) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "DELETE FROM seatmap WHERE scheduleId=?";
@@ -116,13 +114,12 @@ public class SeatMapDao implements DaoInterface {
         return false;
     }
 
-    @Override
-    public boolean updateEntity(Entity entity) {
+    
+    public static boolean updateSeatMap(SeatMap seatMap) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "UPDATE seatmap SET map=?,fClass=?,bClass=?,peClass=?,eClass=? WHERE scheduleId=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            SeatMap seatMap = (SeatMap) entity;
             Gson gson = new Gson();
             preparedStatement.setString(1, gson.toJson(seatMap.getMap()));
             preparedStatement.setInt(2, seatMap.getfClassSpare());

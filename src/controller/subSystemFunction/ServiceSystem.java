@@ -11,10 +11,9 @@ import java.util.List;
  * Created by hdd on 15/05/15.
  */
 public class ServiceSystem {
-    public static List<Entity> showServiceInventory() {
-        ServiceInventoryDao serviceInventoryDao = new ServiceInventoryDao();
+    public static List<ServiceInventory> showServiceInventory() {
         try {
-            List<Entity> inventoryList = serviceInventoryDao.getAllEntity();
+            List<ServiceInventory> inventoryList = ServiceInventoryDao.getAllServiceInventory();
             return inventoryList;
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -23,18 +22,15 @@ public class ServiceSystem {
     }
 
     public static void addInventory(ServiceInventory serviceInventory) {
-        ServiceInventoryDao serviceInventoryDao = new ServiceInventoryDao();
-        serviceInventoryDao.addEntity(serviceInventory);
+        ServiceInventoryDao.addServiceInventory(serviceInventory);
     }
 
     public static boolean editInventory(ServiceInventory serviceInventory) {
-        ServiceInventoryDao serviceInventoryDao = new ServiceInventoryDao();
-        return serviceInventoryDao.updateEntity(serviceInventory);
+        return ServiceInventoryDao.updateServiceInventory(serviceInventory);
     }
 
     public static boolean deleteInventory(int serviceInventoryID) {
-        ServiceInventoryDao serviceInventoryDao = new ServiceInventoryDao();
-        return serviceInventoryDao.delEntity(serviceInventoryID);
+        return ServiceInventoryDao.delServiceInventory(serviceInventoryID);
     }
 
 }

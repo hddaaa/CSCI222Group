@@ -1,6 +1,5 @@
 package model.dao;
 
-import model.entity.Entity;
 import model.entity.Schedule;
 import util.DB.DBConnection;
 import util.common.DataNotFoundException;
@@ -17,9 +16,9 @@ import java.util.List;
 /**
  * Created by hdd on 13/05/15.
  */
-public class ScheduleDao implements DaoInterface {
-    @Override
-    public Entity getEntity(int id) throws DataNotFoundException {
+public class ScheduleDao {
+    
+    public static Schedule getSchedule(int id) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM schedule WHERE id=?";
@@ -45,11 +44,11 @@ public class ScheduleDao implements DaoInterface {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        throw new DataNotFoundException("ScheduleDao: getEntity");
+        throw new DataNotFoundException("ScheduleDao: getSchedule");
     }
 
 
-    public List<Schedule> getScheduleInRoute(int routeId) throws DataNotFoundException {
+    public static List<Schedule> getScheduleInRoute(int routeId) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM schedule WHERE Route=?";
@@ -82,14 +81,14 @@ public class ScheduleDao implements DaoInterface {
 
     }
 
-    @Override
-    public List<Entity> getAllEntity() throws DataNotFoundException {
+    
+    public static List<Schedule> getAllSchedule() throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "SELECT * FROM schedule";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
-            List<Entity> list = new ArrayList<Entity>();
+            List<Schedule> list = new ArrayList<Schedule>();
             while (rs.next()) {
                 Schedule schedule = new Schedule();
                 schedule.setId(rs.getInt("id"));
@@ -104,7 +103,7 @@ public class ScheduleDao implements DaoInterface {
                 list.add(schedule);
             }
             if (list.isEmpty())
-                throw new DataNotFoundException("ScheduleDao: getAllEntity");
+                throw new DataNotFoundException("ScheduleDao: getAllSchedule");
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -116,13 +115,12 @@ public class ScheduleDao implements DaoInterface {
 
     }
 
-    @Override
-    public void addEntity(Entity entity) {
+    
+    public static void addSchedule(Schedule schedule) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "INSERT INTO schedule (Flight_ID,Plane,Route,Depart_Time,Arrive_Time) VALUE (?,?,?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Schedule schedule = (Schedule) entity;
             preparedStatement.setString(1, schedule.getFlightID());
             preparedStatement.setInt(2, schedule.getPlane());
             preparedStatement.setInt(3, schedule.getRoute());
@@ -134,8 +132,8 @@ public class ScheduleDao implements DaoInterface {
         }
     }
 
-    @Override
-    public boolean delEntity(int id) {
+    
+    public static boolean delSchedule(int id) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "DELETE FROM schedule WHERE id=?";
@@ -151,13 +149,12 @@ public class ScheduleDao implements DaoInterface {
         return false;
     }
 
-    @Override
-    public boolean updateEntity(Entity entity) {
+    
+    public static boolean updateSchedule(Schedule schedule) {
         Connection conn = DBConnection.getConn();
         try {
             String sql = "UPDATE schedule SET Flight_ID=?,Plane=?,Route=?,Depart_Time=?,Arrive_Time=? WHERE id=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            Schedule schedule = (Schedule) entity;
             preparedStatement.setString(1, schedule.getFlightID());
             preparedStatement.setInt(2, schedule.getPlane());
             preparedStatement.setInt(3, schedule.getRoute());
