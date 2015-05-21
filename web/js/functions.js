@@ -12,6 +12,9 @@ $(function() {
 		t2makeActive: function() {
 			$(".nav_pane").children('ul').each(function() {
 				$(this).removeClass("active");
+				$(this).children('li').each(function() {
+					$(this).removeClass("active");
+				});
 			});
 			$(this).addClass("active");
 		}
@@ -22,6 +25,14 @@ $(function() {
 				$(this).removeClass("active");
 			});
 			$(this).addClass("active");
+		}
+	});
+	jQuery.fn.extend({
+		switchContent: function() {
+			var systemIndex = $(".nav_pane .active").index() + 1;
+			var toolIndex = $(".nav_pane .active .active").index() + 1;
+			$(".inner_frame .active").removeClass("active");
+			$(".inner_frame section:nth-child(" + systemIndex + ") div:nth-child(" + toolIndex + ")").addClass("active");
 		}
 	});
 	//tier 1 navigation
@@ -35,6 +46,7 @@ $(function() {
 		$(".inner_frame").css("border-top-left-radius", "0px");
 		$(".outer_frame").css("border-top-left-radius", "0px");
 		$(".outer_frame").css("border-top-right-radius", "5px");
+		$(window).switchContent();
 	});
 	$("#t1_2").click(function() {
 		$("#t1_2").t1makeActive();
@@ -46,6 +58,7 @@ $(function() {
 		$(".inner_frame").css("border-top-left-radius", "0px");
 		$(".outer_frame").css("border-top-left-radius", "5px");
 		$(".outer_frame").css("border-top-right-radius", "5px");
+		$(window).switchContent();
 	});
 	$("#t1_3").click(function() {
 		$("#t1_3").t1makeActive();
@@ -57,6 +70,7 @@ $(function() {
 		$(".inner_frame").css("border-top-left-radius", "0px");
 		$(".outer_frame").css("border-top-left-radius", "5px");
 		$(".outer_frame").css("border-top-right-radius", "5px");
+		$(window).switchContent();
 	});
 	$("#t1_4").click(function() {
 		$("#t1_4").t1makeActive();
@@ -68,6 +82,7 @@ $(function() {
 		$(".inner_frame").css("border-top-left-radius", "0px");
 		$(".outer_frame").css("border-top-left-radius", "5px");
 		$(".outer_frame").css("border-top-right-radius", "0px");
+		$(window).switchContent();
 	});
 	//tier 3 navigation
 	$(".nav_pane li").click(function() {
@@ -80,6 +95,7 @@ $(function() {
 		var el_text = $(this).text();
 		$("#t2").text(el_text);
 		$("#page_title").text(el_text);
+		$(window).switchContent();
 	});
 	//Search flight form
 	$("#return").click(function() {
