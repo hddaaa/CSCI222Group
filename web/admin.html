@@ -78,96 +78,243 @@
 					</ul>
 				</div>
 				<div class="inner_frame">
-					<div class="active">
-						<form class="form form-aligned">
-							<fieldset>
-								<div class="control-group">
-									<label for="origin">Origin</label>
-									<select id="origin">
-										<option value="SYD">SYDNEY, Australia</option>
-										<option value="MEL">MELBOURNE, Australia</option>
-										<option value="ADL">ADELAIDE, Australia</option>
-										<option value="BNE">BRISBANE, Australia</option>
-										<option value="HBA">HOBART, Australia</option>
-										<option value="PER">PERTH, Australia</option>
-									</select>
-								</div>
-								<div class="control-group">
-									<label for="destination">Destination</label>
-									<select id="destination">
-										<option value="SYD">SYDNEY, Australia</option>
-										<option value="MEL">MELBOURNE, Australia</option>
-										<option value="ADL">ADELAIDE, Australia</option>
-										<option value="BNE">BRISBANE, Australia</option>
-										<option value="HBA">HOBART, Australia</option>
-										<option value="PER">PERTH, Australia</option>
-									</select>
-								</div>
-								<div class="control-group">
-									<label for="depart_date">Departure Date</label>
-									<input id="depart_date" type="date">
-								</div>
-								<div class="control-group">
-									<label for="return">Return Flight?</label>
-									<input id="return" type="checkbox">
-								</div>
-								<div class="control-group">
-									<label for="return_date">Return Date</label>
-									<input id="return_date" type="date" disabled>
-								</div>
-								<div class="control-group">
-									<label for="passengers">Number of Passengers</label>
-									<input id="passengers" type="number" min="1" value="1">
-								</div>
-								<div class="controls">
-									<button type="submit" class="button button-primary">Submit</button>
-								</div>
-							</fieldset>
-						</form>
-					</div>
-					<div class="active">
-						<form class="form form-aligned">
-							<fieldset>
-								<div class="control-group">
-									<label for="fid">Flight ID</label>
-									<input id="fid" type="text">
-								</div>
-								<div class="control-group">
-									<label for="plane">Plane</label>
-									<select id="plane">
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-									</select>
-								</div>
-								<div class="control-group">
-									<label for="route">Route</label>
-									<select id="route">
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">...</option>
-										<option value="431">431</option>
-										<option value="432">432</option>
-									</select>
-								</div>
-								<div class="control-group">
-									<label for="depart_date">Depart Date</label>
-									<input id="depart_date" type="date">
-								</div>
-								<div class="control-group">
-									<label for="arrive_date">Arrive Date</label>
-									<input id="arrive_date" type="date">
-								</div>
-								<div class="controls">
-									<button type="submit" class="button button-primary">Submit</button>
-								</div>
-							</fieldset>
-						</form>
-					</div>
+					<section id="res">
+						<div class="active content">
+							<form class="form form-aligned">
+								<fieldset>
+									<div class="control-group">
+										<label for="origin">Origin</label>
+										<select id="origin">
+											<option value="SYD">SYDNEY, Australia</option>
+											<option value="MEL">MELBOURNE, Australia</option>
+											<option value="ADL">ADELAIDE, Australia</option>
+											<option value="BNE">BRISBANE, Australia</option>
+											<option value="HBA">HOBART, Australia</option>
+											<option value="PER">PERTH, Australia</option>
+										</select>
+									</div>
+									<div class="control-group">
+										<label for="destination">Destination</label>
+										<select id="destination">
+											<option value="SYD">SYDNEY, Australia</option>
+											<option value="MEL">MELBOURNE, Australia</option>
+											<option value="ADL">ADELAIDE, Australia</option>
+											<option value="BNE">BRISBANE, Australia</option>
+											<option value="HBA">HOBART, Australia</option>
+											<option value="PER">PERTH, Australia</option>
+										</select>
+									</div>
+									<div class="control-group">
+										<label for="depart_date">Departure Date</label>
+										<input id="depart_date" type="date">
+									</div>
+									<div class="control-group">
+										<label for="return">Return Flight?</label>
+										<input id="return" type="checkbox">
+									</div>
+									<div class="control-group">
+										<label for="return_date">Return Date</label>
+										<input id="return_date" type="date" disabled>
+									</div>
+									<div class="control-group">
+										<label for="passengers">Number of Passengers</label>
+										<input id="passengers" type="number" min="1" value="1">
+									</div>
+									<div class="controls">
+										<button type="submit" class="button button-primary">Submit</button>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+						<div class="content">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Customer First Name</th>
+										<th>Last Name</th>
+										<th>Passengers</th>
+										<th>Flight ID</th>
+										<th>Services</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>123</td>
+										<td>John</td>
+										<td>Paul</td>
+										<td>1</td>
+										<td>QF5211</td>
+										<td>1, 15</td>
+									</tr>
+									<tr>
+										<td>124</td>
+										<td>Johnathan</td>
+										<td>Paulette</td>
+										<td>3</td>
+										<td>QF5211</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>125</td>
+										<td>Jason</td>
+										<td>Bridges</td>
+										<td>2</td>
+										<td>QF5211</td>
+										<td>1, 15, 16</td>
+									</tr>
+									<tr>
+										<td>126</td>
+										<td>Jack</td>
+										<td>Reynolds</td>
+										<td>5</td>
+										<td>QF5211</td>
+										<td>1</td>
+									</tr>
+									<tr>
+										<td>127</td>
+										<td>Petra</td>
+										<td>Becker</td>
+										<td>1</td>
+										<td>QF5211</td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="content">
+							<form class="form form-aligned">
+								<fieldset>
+									<div class="control-group">
+										<label for="fid">Flight ID</label>
+										<input id="fid" type="text">
+									</div>
+									<div class="control-group">
+										<label for="plane">Plane</label>
+										<select id="plane">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+										</select>
+									</div>
+									<div class="control-group">
+										<label for="route">Route</label>
+										<select id="route">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">...</option>
+											<option value="431">431</option>
+											<option value="432">432</option>
+										</select>
+									</div>
+									<div class="control-group">
+										<label for="depart_date">Depart Date</label>
+										<input id="depart_date" type="date">
+									</div>
+									<div class="control-group">
+										<label for="arrive_date">Arrive Date</label>
+										<input id="arrive_date" type="date">
+									</div>
+									<div class="controls">
+										<button type="submit" class="button button-primary">Submit</button>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+						<div class="content">
+							<form class="form form-aligned">
+								<fieldset>
+									<legend>Select Scheduled Flight ID to change details</legend>
+									<div class="control-group">
+										<label for="fid">ID</label>
+										<input id="fid" type="number" min="1" max="1000">
+										<button type="button" class="button button-primary">Get Flight</submit>
+									</div>
+									<div class="control-group">
+										<label for="fid">Flight ID</label>
+										<input id="fid" type="text">
+									</div>
+									<div class="control-group">
+										<label for="plane">Plane</label>
+										<select id="plane">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+										</select>
+									</div>
+									<div class="control-group">
+										<label for="route">Route</label>
+										<select id="route">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">...</option>
+											<option value="431">431</option>
+											<option value="432">432</option>
+										</select>
+									</div>
+									<div class="control-group">
+										<label for="depart_date">Depart Date</label>
+										<input id="depart_date" type="date">
+									</div>
+									<div class="control-group">
+										<label for="arrive_date">Arrive Date</label>
+										<input id="arrive_date" type="date">
+									</div>
+									<div class="controls">
+										<button type="submit" class="button button-primary">Submit</button>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</section>
+					<section id="pro">
+						<div class="content">
+							<form class="form form-aligned">
+								<fieldset>
+									<legend>Change any details you wish to be changed</legend>
+									<div class="g">
+										<div class="u-1 u-md-1-3">
+											<label for="username">Username</label>
+											<input id="username" class="u-23-24" type="text" placeholder="">
+										</div>
+										<div class="u-1 u-md-1-3">
+											<label for="email">Email</label>
+											<input id="email" class="u-23-24" type="email" placeholder="">
+										</div>
+										<div class="u-1 u-md-1-3">
+											<label for="fname">First Name</label>
+											<input id="fname" class="u-23-24" type="text" placeholder="">
+										</div>
+										<div class="u-1 u-md-1-3">
+											<label for="lname">Last Name</label>
+											<input id="lname" class="u-23-24" type="text" placeholder="">
+										</div>
+										<div class="u-1 u-md-1-3">
+											<label for="phone">Phone No.</label>
+											<input id="phone" class="u-23-24" type="text" placeholder="">
+										</div>
+										<div class="u-1 u-md-1-3">
+											<label for="nationality">Nationality</label>
+											<input id="nationality" class="u-23-24" type="text" placeholder="">
+										</div>
+									</div>
+									<button type="submit" class="button button-primary">Save and Exit <i class="fa fa-save"></i></button>
+								</fieldset>
+							</form>
+						</div>
+					</section>
+					<section id="ser">
+					</section>
+					<section id="rep">
+					</section>
 				</div>
 			</div>
 		</div>
