@@ -17,7 +17,7 @@ public class DBConnection {
         if (conn == null) {
             try {
                 Context initialContext = new InitialContext();
-                DataSource ds = (DataSource) initialContext.lookup("jdbc/DB399DS");
+                DataSource ds = (DataSource) initialContext.lookup("java:comp/env/jndi/DB222");
                 conn = ds.getConnection();
             } catch (SQLException | NamingException e) {
                 e.printStackTrace();

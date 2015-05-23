@@ -11,12 +11,25 @@ body {
 .box {
 	width: 100%;
 	max-width: 430px;
+	margin-right: auto;
+	margin-left: auto;
 	border-radius: 6px;
 	box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.5);
 	border: 1px solid #ddd;
 	background: #eef url('bg01.png');
 	padding: 0 10px;
 	display: inline-block;
+}
+.search{
+	width: 100%;
+	max-width: 730px;
+	margin-right: auto;
+	margin-left: auto;
+	border-radius: 6px;
+	box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.5);
+	border: 1px solid #ddd;
+	background: #eef url('bg01.png');
+	padding: 0 10px;
 }
 h2 {
 	color: #0078e7;

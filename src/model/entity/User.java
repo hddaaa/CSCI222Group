@@ -1,11 +1,13 @@
 package model.entity;
 
+import util.Enum.UserAuthority;
+
 /**
  * Created by hdd on 12/05/15.
  */
 public class User extends Entity {
     private String username;
-    private int authority;
+    private UserAuthority authority;
     private boolean availability;
 
     public String getUsername() {
@@ -16,11 +18,11 @@ public class User extends Entity {
         this.username = username;
     }
 
-    public int getAuthority() {
+    public UserAuthority getAuthority() {
         return authority;
     }
 
-    public void setAuthority(int authority) {
+    public void setAuthority(UserAuthority authority) {
         this.authority = authority;
     }
 

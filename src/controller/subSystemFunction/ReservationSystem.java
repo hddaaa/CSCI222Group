@@ -18,10 +18,7 @@ public class ReservationSystem {
 
     public static List searchSchedule(String sourceAirport, String destinationAirport, Date departureDate) {
         try {
-            Airport sAirport = AirportDao.getAirport(sourceAirport);
-            Airport dAirport = AirportDao.getAirport(destinationAirport);
-
-            Route route = RouteDao.getRoute(sAirport.getIATA_FAA(), dAirport.getIATA_FAA());
+            Route route = RouteDao.getRoute(sourceAirport, destinationAirport);
             List<Schedule> scheduleList = ScheduleDao.getScheduleInRoute(route.getId());
             Calendar departureCal = Calendar.getInstance();
             Calendar scheduleCal = Calendar.getInstance();
@@ -30,12 +27,12 @@ public class ReservationSystem {
             for (Schedule schedule : scheduleList) {
 
                 scheduleCal.setTime(schedule.getDepartTime());
-                if (departureCal.get(Calendar.MONTH) == scheduleCal.get(Calendar.MONTH) && departureCal.get(Calendar.DAY_OF_MONTH) == scheduleCal.get(Calendar.DAY_OF_MONTH)) {
+                if (departureCal.get(Calendar.MONTH) == scheduleCal.get(Calendar.MONTH) && departureCal.get(Calendar.DATE) == scheduleCal.get(Calendar.DATE)) {
                     foundList.add(schedule);
                 }
             }
             if (foundList.isEmpty())
-                return null;
+                return scheduleList;
             else
                 return foundList;
         } catch (DataNotFoundException e) {
@@ -76,10 +73,10 @@ public class ReservationSystem {
         }
     }
 
-    public static List<Integer> showEmptySeat(int scheduleId) {
+    public static SeatMap showSeatMep(int scheduleId) {
         try {
             SeatMap seatMap = SeatMapDao.getSeatMap(scheduleId);
-            return seatMap.getMap();
+            return seatMap;
         } catch (DataNotFoundException e) {
             e.printStackTrace();
             return null;

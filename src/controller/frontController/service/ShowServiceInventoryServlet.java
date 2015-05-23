@@ -2,6 +2,7 @@ package controller.frontController.service;
 
 import controller.subSystemFunction.ServiceSystem;
 import model.entity.Entity;
+import model.entity.ServiceInventory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +22,7 @@ public class ShowServiceInventoryServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Entity> inventoryList = ServiceSystem.showServiceInventory();
+        List<ServiceInventory> inventoryList = ServiceSystem.showServiceInventory();
         request.setAttribute("inventoryList", inventoryList);
         request.getRequestDispatcher("").forward(request, response);
     }

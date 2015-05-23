@@ -1,10 +1,8 @@
 package controller.frontController.reservation;
 
 import controller.subSystemFunction.ReservationSystem;
-import model.entity.Fleet;
-import model.entity.Route;
-import model.entity.Schedule;
-import model.entity.User;
+import model.entity.*;
+import util.Enum.UserAuthority;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,18 +17,18 @@ import java.util.Map;
 /**
  * Created by hdd on 16/05/15.
  */
-@WebServlet(name = "ShowFlightDetailServlet")
+@WebServlet(name = "ShowFlightDetailServlet", urlPatterns = {"/ShowFlightDetail"})
 public class ShowFlightDetailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
         Schedule schedule = ReservationSystem.scheduleDetail(scheduleId);
         Fleet fleet = ReservationSystem.fleetDetail(schedule.getPlane());
         Route route = ReservationSystem.routeDetail(schedule.getRoute());
-        List<Integer> map = ReservationSystem.showEmptySeat(scheduleId);
+        SeatMap map = ReservationSystem.showSeatMep(scheduleId);
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         String agentEmail = null;
-        if (user.getAuthority() == 2) {
+        if (user.getAuthority() == UserAuthority.Agent) {
 
             agentEmail = user.getUsername();
         }

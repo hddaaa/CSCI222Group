@@ -3,6 +3,7 @@ package controller.frontController.reservation;
 import controller.subSystemFunction.ReservationSystem;
 import model.entity.Customer;
 import model.entity.User;
+import util.Enum.UserAuthority;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,7 +48,7 @@ public class RegisterServlet extends HttpServlet {
         customer.setTravelAgent(request.getParameter("travelAgent"));
         User user = new User();
         user.setUsername(request.getParameter("username"));
-        user.setAuthority(1);
+        user.setAuthority(UserAuthority.Customer);
         boolean result = ReservationSystem.register(customer, user, request.getParameter("pwd"));
         request.setAttribute("registerResult", result);
         request.getRequestDispatcher("").forward(request, response);

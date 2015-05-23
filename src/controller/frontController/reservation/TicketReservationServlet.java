@@ -3,6 +3,7 @@ package controller.frontController.reservation;
 import controller.subSystemFunction.ReservationSystem;
 import model.entity.Ticket;
 import model.entity.User;
+import util.Enum.UserAuthority;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +28,7 @@ public class TicketReservationServlet extends HttpServlet {
         ticket.setScheduleId(scheduleId);
         ticket.setFareClass(fareClass);
         String agentEmail = null;
-        if (user.getAuthority() == 2) {
+        if (user.getAuthority() == UserAuthority.Agent) {
 
             agentEmail = user.getUsername();
         }

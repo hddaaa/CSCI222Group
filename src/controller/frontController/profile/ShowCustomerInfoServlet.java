@@ -3,6 +3,7 @@ package controller.frontController.profile;
 import controller.subSystemFunction.ProfileSystem;
 import model.entity.Customer;
 import model.entity.User;
+import util.Enum.UserAuthority;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +25,7 @@ public class ShowCustomerInfoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user.getAuthority() == 1) {
+        if (user.getAuthority() == UserAuthority.Customer) {
             Customer customer = ProfileSystem.customerInfo(user.getUsername());
             request.setAttribute("customer", customer);
             request.getRequestDispatcher("").forward(request, response);
