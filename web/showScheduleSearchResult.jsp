@@ -3,6 +3,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="model.entity.Airport" %>
 <%@ page import="java.util.TimeZone" %>
+<%@ page import="util.common.ParseDateUtil" %>
 <%--
   Created by IntelliJ IDEA.
   User: hdd
@@ -15,36 +16,31 @@
   List<Schedule> returnSchedules = (List<Schedule>) request.getAttribute("returnSchedules");
   Airport sourceAirport = (Airport) request.getAttribute("sourceAirport");
   Airport destinationAirport = (Airport) request.getAttribute("destinationAirport");
-  SimpleDateFormat ssdf = new SimpleDateFormat("hh:mm dd MMM yyyy");
-  ssdf.setTimeZone(TimeZone.getTimeZone(sourceAirport.getDatabase_timezone()));
-  SimpleDateFormat dsdf = new SimpleDateFormat("hh:mm dd MMM yyyy");
-  dsdf.setTimeZone(TimeZone.getTimeZone(destinationAirport.getDatabase_timezone()));
 %>
 <form action="/ShowFlightDetail" method="post">
 <h1>Schedule</h1>
 <table>
   <tr>
     <th>Flight ID</th>
-    <th>source airport</th>
-    <th>departure time</th>
-    <th>destination airport</th>
-    <th>arrive time</th>
-    <th>select</th>
+    <th>Source airport</th>
+    <th>Departure time</th>
+    <th>Destination airport</th>
+    <th>Arrive time</th>
+    <th>Select</th>
   </tr>
   <%
     for (Schedule s :schedules){
       out.print("<tr>" +
               "<td>"+s.getFlightID()+"</td>" +
               "<td>"+sourceAirport.getCity()+"</td>" +
-              "<td>"+ssdf.format(s.getDepartTime())+"</td>" +
+              "<td>"+ ParseDateUtil.formatDate(s.getDepartTime(),sourceAirport.getDatabase_timezone())+"</td>" +
               "<td>"+destinationAirport.getCity()+"</td>" +
-              "<td>"+ssdf.format(s.getArrivedTime())+"</td>" +
+              "<td>"+ParseDateUtil.formatDate(s.getArrivedTime(),destinationAirport.getDatabase_timezone())+"</td>" +
               "<td><input type='radio'"+(s.equals(schedules.get(0))?" checked='checked'":"")+" name='scheduleId' value='"+s.getId()+"' />" +
               "</tr>");
     }
   %>
 </table>
-
 <%
   if(returnSchedules!=null){
 %>
@@ -52,20 +48,20 @@
 <table>
   <tr>
     <th>Flight ID</th>
-    <th>source airport</th>
-    <th>departure time</th>
-    <th>destination airport</th>
-    <th>arrive time</th>
-    <th>select</th>
+    <th>Source airport</th>
+    <th>Departure time</th>
+    <th>Destination airport</th>
+    <th>Arrive time</th>
+    <th>Select</th>
   </tr>
   <%
     for (Schedule rs :returnSchedules){
       out.print("<tr>" +
               "<td>"+rs.getFlightID()+"</td>" +
               "<td>"+destinationAirport.getCity()+"</td>" +
-              "<td>"+ssdf.format(rs.getDepartTime()) +"</td>" +
+              "<td>"+ParseDateUtil.formatDate(rs.getDepartTime(),destinationAirport.getDatabase_timezone()) +"</td>" +
               "<td>"+sourceAirport.getCity()+"</td>" +
-              "<td>"+ssdf.format(rs.getArrivedTime())+"</td>" +
+              "<td>"+ParseDateUtil.formatDate(rs.getArrivedTime(),sourceAirport.getDatabase_timezone())+"</td>" +
               "<td><input type='radio'"+(rs.equals(schedules.get(0))?" checked='checked'":"")+" name='returnScheduleId' value='"+rs.getId()+"' />" +
               "</tr>");
     }

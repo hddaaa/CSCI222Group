@@ -4,6 +4,7 @@ import controller.subSystemFunction.ReservationSystem;
 import model.dao.AirportDao;
 import model.entity.Schedule;
 import util.common.DataNotFoundException;
+import util.common.ParseDateUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,27 +29,19 @@ public class SearchScheduleServlet extends HttpServlet {
         String[] isReturn = request.getParameterValues("isReturn");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         request.getSession().setAttribute("return",null);
-        Date departureDate;
-        try {
-            departureDate = sdf.parse(request.getParameter("departureDate"));
-            List<Schedule> schedules = ReservationSystem.searchSchedule(sourceAirport, destinationAirport, departureDate);
-            request.setAttribute("schedules", schedules);
-            if(isReturn!=null){
-                Date returnDate = sdf.parse(request.getParameter("returnDate"));
-                List<Schedule> returnSchedules = ReservationSystem.searchSchedule(destinationAirport, sourceAirport, returnDate);
-                request.getSession().setAttribute("return","return");
-                request.setAttribute("returnSchedules", returnSchedules);
-            }
-            request.setAttribute("sourceAirport", AirportDao.getAirport(sourceAirport));
-            request.setAttribute("destinationAirport", AirportDao.getAirport(destinationAirport));
-
-            request.getRequestDispatcher("searchScheduleWithoutLogin.jsp").forward(request, response);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (DataNotFoundException e) {
-            e.printStackTrace();
+        Date departureDate=ParseDateUtil.parseDate(request.getParameter("departureDate"));
+        List<Schedule> schedules = ReservationSystem.searchSchedule(sourceAirport, destinationAirport, departureDate);
+        request.setAttribute("schedules", schedules);
+        if(isReturn!=null){
+            Date returnDate = ParseDateUtil.parseDate(request.getParameter("returnDate"));
+            List<Schedule> returnSchedules = ReservationSystem.searchSchedule(destinationAirport, sourceAirport, returnDate);
+            request.getSession().setAttribute("return","return");
+            request.setAttribute("returnSchedules", returnSchedules);
         }
-
+        request.setAttribute("sourceAirport", ReservationSystem.airportDetail(sourceAirport));
+        request.setAttribute("destinationAirport", ReservationSystem.airportDetail(destinationAirport));
+        request.setAttribute("nextStep","scheduleSearch");
+        request.getRequestDispatcher("searchScheduleWithoutLogin.jsp").forward(request, response);
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

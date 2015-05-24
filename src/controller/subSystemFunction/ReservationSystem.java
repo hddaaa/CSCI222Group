@@ -72,14 +72,40 @@ public class ReservationSystem {
             return null;
         }
     }
+    public static Airport airportDetail(String airportCode){
+        try {
+            return AirportDao.getAirport(airportCode);
+        } catch (DataNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-    public static SeatMap showSeatMep(int scheduleId) {
+    public static SeatMap showSeatMap(int scheduleId) {
         try {
             SeatMap seatMap = SeatMapDao.getSeatMap(scheduleId);
             return seatMap;
         } catch (DataNotFoundException e) {
-            e.printStackTrace();
-            return null;
+            try {
+                SeatMap seatMap = new SeatMap();
+                Schedule schedule = ScheduleDao.getSchedule(scheduleId);
+                Fleet fleet = FleetDao.getFleet(schedule.getPlane());
+                seatMap.setfClassSpare(fleet.getFClass());
+                seatMap.setbClassSpare(fleet.getBClass());
+                seatMap.setPeClassSpare(fleet.getPEClass());
+                seatMap.seteClassSpare(fleet.getEClass());
+                seatMap.setScheduleId(scheduleId);
+                List map = new ArrayList();
+                for (int i =0;i<fleet.getTotal();i++)
+                    map.add(0);
+                seatMap.setMap(map);
+                SeatMapDao.addSeatMap(seatMap);
+                return seatMap;
+            } catch (DataNotFoundException e1) {
+                e1.printStackTrace();
+                return null;
+            }
+
         }
     }
 
@@ -113,7 +139,7 @@ public class ReservationSystem {
     public static Map<String, Integer> getPriceList(Route route, String agentEmail) {
         try {
             Agent agent = null;
-            if (!agentEmail.isEmpty()) {
+            if (agentEmail!=null) {
                 agent = AgentDao.getAgentByEmail(agentEmail);
             }
             Airport sourceAirport = AirportDao.getAirport(route.getSourceAirport());
@@ -126,11 +152,11 @@ public class ReservationSystem {
             double distance = MathUtil.getDistance(lat1, lon1, lat2, lon2);
 
             Map<String, Integer> priceMap = new HashMap<String, Integer>();
-            priceMap.put("FClass", (int) Math.rint(MathUtil.PRICE_PER_KM * distance * MathUtil.getPriceFloat("F", agent == null ? "" : agent.getName())));
-            priceMap.put("BClass", (int) Math.rint(MathUtil.PRICE_PER_KM * distance * MathUtil.getPriceFloat("B", agent == null ? "" : agent.getName())));
-            priceMap.put("PEClass", (int) Math.rint(MathUtil.PRICE_PER_KM * distance * MathUtil.getPriceFloat("PE", agent == null ? "" : agent.getName())));
+            priceMap.put("FClass", (int) Math.rint(MathUtil.PRICE_PER_KM * distance * MathUtil.getPriceFloat("F", agent == null ? null : agent.getName())));
+            priceMap.put("BClass", (int) Math.rint(MathUtil.PRICE_PER_KM * distance * MathUtil.getPriceFloat("B", agent == null ? null : agent.getName())));
+            priceMap.put("PEClass", (int) Math.rint(MathUtil.PRICE_PER_KM * distance * MathUtil.getPriceFloat("PE", agent == null ? null : agent.getName())));
             ;
-            priceMap.put("EClass", (int) Math.rint(MathUtil.PRICE_PER_KM * distance * MathUtil.getPriceFloat("E", agent == null ? "" : agent.getName())));
+            priceMap.put("EClass", (int) Math.rint(MathUtil.PRICE_PER_KM * distance * MathUtil.getPriceFloat("E", agent == null ? null : agent.getName())));
             return priceMap;
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -144,6 +170,7 @@ public class ReservationSystem {
         try {
             SeatMap seatMap =  SeatMapDao.getSeatMap(ticket.getScheduleId());
             List<Integer> map = seatMap.getMap();
+            //check is this customer already reserved
             for (int i : map) {
                 if (i == ticket.getCustomerId())
                     return null;
@@ -167,38 +194,8 @@ public class ReservationSystem {
             }
             SeatMapDao.updateSeatMap(seatMap);
         } catch (DataNotFoundException e) {
-            SeatMap seatMap = new SeatMap();
-            try {
-                Schedule schedule =  ScheduleDao.getSchedule(ticket.getScheduleId());
-                Fleet fleet = FleetDao.getFleet(schedule.getPlane());
-                seatMap.setfClassSpare(fleet.getFClass());
-                seatMap.setbClassSpare(fleet.getBClass());
-                seatMap.setPeClassSpare(fleet.getPEClass());
-                seatMap.seteClassSpare(fleet.getEClass());
-                switch (ticket.getFareClass()){
-                    case "FClass":
-                        seatMap.setfClassSpare(seatMap.getfClassSpare()-1);
-                        break;
-                    case "BClass":
-                        seatMap.setbClassSpare(seatMap.getbClassSpare()-1);
-                        break;
-                    case "PEClass":
-                        seatMap.setPeClassSpare(seatMap.getPeClassSpare()-1);
-                        break;
-                    case "EClass" :
-                        seatMap.seteClassSpare(seatMap.geteClassSpare()-1);
-                        break;
-                    default:
-                        System.out.println("Error: ReservationSystem - ticketReservation()");
-                }
-            } catch (DataNotFoundException e1) {
-                e1.printStackTrace();
-            }
-            seatMap.setScheduleId(ticket.getScheduleId());
-            List map = new ArrayList();
-            map.set(ticket.getSeat(), ticket.getCustomerId());
-            seatMap.setMap(map);
-            SeatMapDao.addSeatMap(seatMap);
+            e.printStackTrace();
+
         }
         return ticket;
     }

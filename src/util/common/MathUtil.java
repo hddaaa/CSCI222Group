@@ -40,9 +40,13 @@ public class MathUtil {
                 r = r * 1;
                 break;
         }
-        if (agent != null & agent.equals("")) {
-            r = r * 0.85;
-        }
+//        if (agent == null) {
+//            return r;
+//        }else if(agent.equals("")){
+//            return r;
+//        }else{
+//            return r*0.85;
+//        }
         return r;
     }
 }

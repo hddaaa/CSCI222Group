@@ -10,6 +10,11 @@ public class User extends Entity {
     private UserAuthority authority;
     private boolean availability;
 
+    public User() {
+        super();
+        availability=true;
+    }
+
     public String getUsername() {
         return username;
     }

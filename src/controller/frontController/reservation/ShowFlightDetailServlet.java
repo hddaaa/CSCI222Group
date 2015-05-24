@@ -1,6 +1,7 @@
 package controller.frontController.reservation;
 
 import controller.subSystemFunction.ReservationSystem;
+import model.dao.AirportDao;
 import model.entity.*;
 import util.Enum.UserAuthority;
 
@@ -24,11 +25,13 @@ public class ShowFlightDetailServlet extends HttpServlet {
         Schedule schedule = ReservationSystem.scheduleDetail(scheduleId);
         Fleet fleet = ReservationSystem.fleetDetail(schedule.getPlane());
         Route route = ReservationSystem.routeDetail(schedule.getRoute());
-        SeatMap map = ReservationSystem.showSeatMep(scheduleId);
+        SeatMap map = ReservationSystem.showSeatMap(scheduleId);
+        Airport sourceAirport = ReservationSystem.airportDetail(route.getSourceAirport());
+        Airport destinationAirport = ReservationSystem.airportDetail(route.getDestinationAirport());
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         String agentEmail = null;
-        if (user.getAuthority() == UserAuthority.Agent) {
+        if (user!=null && user.getAuthority() == UserAuthority.Agent) {
 
             agentEmail = user.getUsername();
         }
@@ -37,8 +40,11 @@ public class ShowFlightDetailServlet extends HttpServlet {
         request.setAttribute("fleet", fleet);
         request.setAttribute("route", route);
         request.setAttribute("seatmap", map);
+        request.setAttribute("sourceAirport", sourceAirport);
+        request.setAttribute("destinationAirport", destinationAirport);
         request.setAttribute("pricemap", priceMap);
-        request.getRequestDispatcher("").forward(request, response);
+        request.setAttribute("nextStep","flightDetail");
+        request.getRequestDispatcher("searchScheduleWithoutLogin.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

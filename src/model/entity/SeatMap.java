@@ -14,6 +14,7 @@ public class SeatMap extends Entity {
     private int eClassSpare;
 
     public SeatMap() {
+
     }
 
     public SeatMap(int scheduleId, List map, int fClassSpare, int bClassSpare, int peClassSpare, int eClassSpare) {

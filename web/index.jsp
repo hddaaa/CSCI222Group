@@ -91,7 +91,7 @@
                 </div>
                 <div class="controls">
                     <button type="submit" class="button button-primary">Login</button>
-                    <button type="button" class="button button-primary">Register</button>
+                    <button type="button" class="button button-primary" onclick="parent.location='searchScheduleWithoutLogin.jsp?nextStep=register'">Register</button>
                 </div>
             </fieldset>
         </form>
