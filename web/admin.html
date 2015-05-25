@@ -282,12 +282,12 @@
 									<legend>Change any details you wish to be changed</legend>
 									<div class="g">
 										<div class="u-1 u-md-1-3">
-											<label for="username">Username</label>
-											<input id="username" class="u-23-24" type="text" placeholder="">
-										</div>
-										<div class="u-1 u-md-1-3">
 											<label for="email">Email</label>
 											<input id="email" class="u-23-24" type="email" placeholder="">
+										</div>
+										<div class="u-1 u-md-1-3">
+											<label for="username">Title</label>
+											<input id="username" class="u-23-24" type="text" placeholder="">
 										</div>
 										<div class="u-1 u-md-1-3">
 											<label for="fname">First Name</label>
@@ -298,22 +298,341 @@
 											<input id="lname" class="u-23-24" type="text" placeholder="">
 										</div>
 										<div class="u-1 u-md-1-3">
-											<label for="phone">Phone No.</label>
-											<input id="phone" class="u-23-24" type="text" placeholder="">
-										</div>
-										<div class="u-1 u-md-1-3">
-											<label for="nationality">Nationality</label>
-											<input id="nationality" class="u-23-24" type="text" placeholder="">
+											<label for="password">Password</label>
+											<input id="password" class="u-23-24" type="text" placeholder="">
 										</div>
 									</div>
 									<button type="submit" class="button button-primary">Save and Exit <i class="fa fa-save"></i></button>
 								</fieldset>
 							</form>
 						</div>
+						<div class="content">
+							<form class="form">
+								<fieldset>
+									<legend>Authority</legend>
+									<div class="u-1 u-md-1-3">
+										<select id="authority" class="u-23-24">
+											<option value="5">Administrator</option>
+											<option value="4">Flight Manager</option>
+											<option value="3">Service Manager</option>
+											<option value="2">Staff</option>
+											<option value="1.5">Agent</option>
+											<option value="1">Customer</option>
+										</select>
+									</div>
+									
+									<legend>Personal Information</legend>
+									<div class="u-1 u-md-1-3">
+										<select id="title" class="u-23-24">
+											<option value="mr">Mr</option>
+											<option value="ms">Ms</option>
+											<option value="dr">Dr</option>
+											<option value="rev">Rev</option>
+											<option value="honourable">Honourable</option>
+											<option value="mrs">Mrs</option>
+										</select>
+									</div>
+									<div class="u-1 u-md-1-3">
+										<input id="fname" class="u-23-24" type="text" placeholder="First Name">
+									</div>
+									<div class="u-1 u-md-1-3">
+										<input id="lname" class="u-23-24" type="text" placeholder="Last Name">
+									</div>
+									<div class="u-1 u-md-1-3">
+										<select id="gender" class="u-23-24">
+											<option value="male">Male</option>
+											<option value="female">Female</option>
+										</select>
+									</div>
+									<div class="u-1 u-md-1-3">
+										<input id="dob" class="u-23-24" type="date">
+									</div>
+									<div class="u-1 u-md-1-3">
+										<input id="phone" class="u-23-24" type="text" placeholder="Phone Number">
+									</div>
+									<div class="u-1 u-md-1-3">
+										<input id="email" class="u-23-24" type="email" placeholder="Email">
+									</div>
+									
+									<legend>Location</legend>
+									<div class="u-1 u-md-1-3">
+										<input id="address" class="u-23-24" type="text" placeholder="Street Address">
+									</div>
+									<div class="u-1 u-md-1-3">
+										<input id="state" class="u-23-24" type="text" placeholder="State">
+									</div>
+									<div class="u-1 u-md-1-3">
+										<input id="city" class="u-23-24" type="text" placeholder="City">
+									</div>
+									<div class="u-1 u-md-1-3">
+										<input id="country" class="u-23-24" type="text" placeholder="Country">
+									</div>
+									
+									<legend>Credit Card</legend>
+									<div class="u-1 u-md-1-3">
+										<select id="credittype" class="u-23-24">
+											<option value="jcb">JCB</option>
+											<option value="americanexpress">American Express</option>
+											<option value="bankcard">Bank Card</option>
+											<option value="maestro">Maestro</option>
+											<option value="mastercard">Mastercard</option>
+											<option value="visa-election">Visa Electron</option>
+											<option value="visa">Visa</option>
+											<option value="diners-club-carte-blanche">Diners Club Carte Blanche</option>
+											<option value="switch">Switch</option>
+											<option value="diners-club-international">Diners Club International</option>
+											<option value="instapayment">Instapayment</option>
+											<option value="solo">Solo</option>
+											<option value="laser">Laser</option>
+											<option value="china-unionpay">China Unionpay</option>
+										</select>
+									</div>
+									<div class="u-1 u-md-1-3">
+										<input id="creditnumber" class="u-23-24" type="text" placeholder="Number">
+									</div>
+									
+									<legend>Passport</legend>
+									<div class="u-1 u-md-1-3">
+										<input name="passport" type="radio" value="true">Yes<br />
+										<input name="passport" type="radio" value="false">No<br/>
+									</div>
+									
+									<button type="submit" class="button button-primary">Save and Exit <i class="fa fa-save"></i></button>
+								</fieldset>
+							</form>
+						</div>
+						<div class="content">
+							<form class="form">
+								<fieldset>
+									<input id="search" type="text" placeholder="Search for..." style="width:614px">
+									<button type="submit" class="button button-primary">Search <i class="fa fa-search"></i></button>
+								</fieldset>
+							</form>
+							<table class="table">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Title</th>
+										<th>First Name</th>
+										<th>Last Name</th>
+										<th>Gender</th>
+										<th>DOB</th>
+										<th>Phone</th>
+										<th>Email</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
 					</section>
 					<section id="ser">
+						<div class="content">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Item</th>
+										<th>Cost (AUD)</th>
+										<th>Availability</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td>small meal</td>
+										<td>15</td>
+										<td>all</td>
+									</tr>
+									<tr>
+										<td>2</td>
+										<td>standard meal</td>
+										<td>20</td>
+										<td>international</td>
+									</tr>
+									<tr>
+										<td>3</td>
+										<td>deluxe meal</td>
+										<td>40</td>
+										<td>international</td>
+									</tr>
+									<tr>
+										<td>4</td>
+										<td>dietary needs meal</td>
+										<td>25</td>
+										<td>international</td>
+									</tr>
+									<tr>
+										<td>5</td>
+										<td>packet of chips</td>
+										<td>4</td>
+										<td>all</td>
+									</tr>
+									<tr>
+										<td>6</td>
+										<td>packet of nuts</td>
+										<td>4</td>
+										<td>all</td>
+									</tr>
+									<tr>
+										<td>7</td>
+										<td>chocolate bar</td>
+										<td>5</td>
+										<td>all</td>
+									</tr>
+									<tr>
+										<td>8</td>
+										<td>snack pack</td>
+										<td>7</td>
+										<td>all</td>
+									</tr>
+									<tr>
+										<td>9</td>
+										<td>bottle water</td>
+										<td>5</td>
+										<td>all</td>
+									</tr>
+									<tr>
+										<td>10</td>
+										<td>beer</td>
+										<td>11</td>
+										<td>international</td>
+									</tr>
+									<tr>
+										<td>11</td>
+										<td>wine</td>
+										<td>16</td>
+										<td>international</td>
+									</tr>
+									<tr>
+										<td>12</td>
+										<td>spirit</td>
+										<td>20</td>
+										<td>international</td>
+									</tr>
+									<tr>
+										<td>13</td>
+										<td>soft drink</td>
+										<td>6</td>
+										<td>all</td>
+									</tr>
+									<tr>
+										<td>14</td>
+										<td>tea/coffee</td>
+										<td>5</td>
+										<td>all</td>
+									</tr>
+									<tr>
+										<td>15</td>
+										<td>screen hire</td>
+										<td>25</td>
+										<td>all</td>
+									</tr>
+									<tr>
+										<td>16</td>
+										<td>headphones</td>
+										<td>10</td>
+										<td>all</td>
+									</tr>
+									<tr>
+										<td>17</td>
+										<td>movie hire</td>
+										<td>10</td>
+										<td>all</td>
+									</tr>
+									<tr>
+										<td>18</td>
+										<td>batteries</td>
+										<td>10</td>
+										<td>all</td>
+									</tr>
+									<tr>
+										<td>19</td>
+										<td>charger hire</td>
+										<td>5</td>
+										<td>all</td>
+									</tr>
+									<tr>
+										<td>20</td>
+										<td>wifi hire</td>
+										<td>30</td>
+										<td>international</td>
+									</tr>
+									<tr>
+										<td>21</td>
+										<td>blanket</td>
+										<td>10</td>
+										<td>international</td>
+									</tr>
+									<tr>
+										<td>22</td>
+										<td>pillow</td>
+										<td>5</td>
+										<td>international</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="content">
+							<form class="form form-aligned">
+								<fieldset>
+									<div class="control-group">
+										<label for="item">Item</label>
+										<select id="item">
+											<option value="0">new</option>
+											<option value="1">small meal</option>
+											<option value="2">standard meal</option>
+											<option value="3">deluxe meal</option>
+											<option value="4">dietary needs meal</option>
+											<option value="5">packet of chips</option>
+											<option value="6">packet of nuts</option>
+											<option value="7">chocolate bar</option>
+											<option value="8">snack pack</option>
+											<option value="9">bottle water</option>
+											<option value="10">beer</option>
+											<option value="11">wine</option>
+											<option value="12">spirit</option>
+											<option value="13">soft drink</option>
+											<option value="14">tea/coffee</option>
+											<option value="15">screen hire</option>
+											<option value="16">headphones</option>
+											<option value="17">movie hire</option>
+											<option value="18">batteries</option>
+											<option value="19">charger hire</option>
+											<option value="20">wifi hire</option>
+											<option value="21">blanket</option>
+											<option value="22">pillow</option>
+										</select>
+										<input name="new" id="item" type="text"></input>
+									</div>
+									<div class="control-group">
+										<label for="cost">Cost (AUD)</label>
+										<input id="cost" type="number" min="0"></input>
+									</div>
+									<div class="control-group">
+										<label for="availability">Availability</label>
+										<input type="radio" name="availability" value="domestic">Domestic
+										<input type="radio" name="availability" value="international">International
+										<input type="radio" name="availability" value="all">All
+									</div>
+									<button type="submit" class="button button-primary">Save and Exit <i class="fa fa-save"></i></button>
+								</fieldset>
+							</form>
+						</div>
 					</section>
 					<section id="rep">
+						<div class="content">
+							Report 1
+						</div>
+						<div class="content">
+							Report 2
+						</div>
+						<div class="content">
+							Report 3
+						</div>
+						<div class="content">
+							Report 4
+						</div>
 					</section>
 				</div>
 			</div>
