@@ -3,6 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="java.util.Comparator" %>
+<%@ page import="model.entity.User" %>
 <%--
   Created by IntelliJ IDEA.
   User: hdd
@@ -12,6 +13,30 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+
+    if(session.getAttribute("user")!=null){
+    User user = (User) session.getAttribute("user");
+        switch (user.getAuthority()){
+            case Customer:
+                response.sendRedirect("homeCustomer.jsp");
+                break;
+            case Agent:
+                response.sendRedirect("homeCustomer.jsp");
+                break;
+            case Stuff:
+                response.sendRedirect("homeCustomer.jsp");
+                break;
+            case ServiceManager:
+                response.sendRedirect("homeCustomer.jsp");
+                break;
+            case FlightManager:
+                response.sendRedirect("homeCustomer.jsp");
+                break;
+            case Admin:
+                response.sendRedirect("homeCustomer.jsp");
+                break;
+        }
+    }
     List<Airport> airportList = AirportDao.getAllAirport();
     Collections.sort(airportList, new Comparator<Airport>() {
         @Override
@@ -79,15 +104,15 @@
     <div class="box login">
         <h2>Login</h2>
 
-        <form class="form form-aligned">
+        <form class="form form-aligned" method="post" action="/Login">
             <fieldset>
                 <div class="control-group">
                     <label for="username">Username</label>
-                    <input id="username" type="text" placeholder="Username">
+                    <input id="username" type="text" placeholder="Username" name="username">
                 </div>
                 <div class="control-group">
-                    <label for="password">Password</label>
-                    <input id="password" type="password">
+                    <label for="pwd">Password</label>
+                    <input id="pwd" type="password" name="pwd">
                 </div>
                 <div class="controls">
                     <button type="submit" class="button button-primary">Login</button>

@@ -40,8 +40,12 @@ public class SearchScheduleServlet extends HttpServlet {
         }
         request.setAttribute("sourceAirport", ReservationSystem.airportDetail(sourceAirport));
         request.setAttribute("destinationAirport", ReservationSystem.airportDetail(destinationAirport));
-        request.setAttribute("nextStep","scheduleSearch");
-        request.getRequestDispatcher("searchScheduleWithoutLogin.jsp").forward(request, response);
+        if (request.getSession().getAttribute("user")==null){
+            request.setAttribute("nextStep","scheduleSearch");
+            request.getRequestDispatcher("searchScheduleWithoutLogin.jsp").forward(request, response);
+        }else {
+            request.getRequestDispatcher("showScheduleSearchResult.jsp").forward(request,response);
+        }
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

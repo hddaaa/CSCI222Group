@@ -45,6 +45,7 @@ public class UserDao {
                 user.setId(rs.getInt("id"));
                 user.setAuthority(UserAuthority.valueOf(rs.getString("authority")));
                 user.setAvailability(rs.getBoolean("availability"));
+                return user;
             }
         } catch (SQLException e) {
             e.printStackTrace();

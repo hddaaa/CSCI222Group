@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS seatmap;
 CREATE TABLE seatmap(
 id INT NOT NULL AUTO_INCREMENT,
 scheduleId INT NOT NULL ,
-map VARCHAR(1000) NOT NULL,
+map VARCHAR(10000) NOT NULL,
 fClass INT NOT NULL ,
 bClass INT NOT NULL ,
 peClass INT NOT NULL ,
@@ -50,3 +50,6 @@ CREATE TABLE user(
   availability TINYINT(1) NOT NULL ,
   PRIMARY KEY (id)
 );
+
+INSERT INTO customer (title,first_name,last_name,gender,DOB,Phone,email,street_address,state,city,country,credit_card_type,credit_card_num,frequent_flier_points_,passport_holder,is_fly,Travel_Agent) VALUE ('Mr','Siyuan','Hou','Male','1989-07-25','5-(218)776-8651','hhh@ggg.com','213 Northwestern Court',NULL,'Qinghai','China','visa','3544701816091840',0,1,NULL,NULL);
+INSERT INTO user (username,pwd,authority,availability) VALUE ('hhh@ggg.com',MD5('hhh'),'Customer',1);

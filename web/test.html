@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function SetWinHeight(ob){alert(ob);}
+    </script>
+    <script src="js/functions.js"></script>
+</head>
+<body>
+<iframe  id="mainFrame" name="mainFrame"  onload="SetWinHeight(this)" width="98" height="70" src=""></iframe>
+<iframe id='iframe' name='iframe' src='http://localhost:8080/searchScheduleForm.jsp' frameborder='0' scrolling='no' width='100%' onload="setTimeout(reset(),50)"></iframe>
+
+</body>
+</html>

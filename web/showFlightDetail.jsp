@@ -64,7 +64,7 @@
 <select name="seatNum">
   <%
     for (int i=0 ;i< seatMap.getMap().size();i++){
-      if(((double)seatMap.getMap().get(i))==0){
+      if(((double)seatMap.getMap().get(i))==-1){
         out.print("<option value='"+i+"'>"+(i+1)+"</option>");
       }
     }

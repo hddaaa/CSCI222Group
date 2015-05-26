@@ -106,3 +106,20 @@ $(function() {
 		}
 	});
 });
+
+
+
+function reset()
+{
+	//alert("reset");
+	var frame = document.getElementById("iframe");
+	//alert(frame);
+	//var outHeight = frame.style.height;
+	//var inHeight = frame.contentWindow.document.documentElement.scrollHeight;
+	//alert(inHeight+" : "+outHeight);
+	//if(outHeight != inHeight)
+	//{
+		frame.style.height = frame.contentWindow.document.body.scrollHeight+ "px";
+	//alert("done");
+	//}
+}

@@ -43,8 +43,12 @@ public class ShowFlightDetailServlet extends HttpServlet {
         request.setAttribute("sourceAirport", sourceAirport);
         request.setAttribute("destinationAirport", destinationAirport);
         request.setAttribute("pricemap", priceMap);
-        request.setAttribute("nextStep","flightDetail");
-        request.getRequestDispatcher("searchScheduleWithoutLogin.jsp").forward(request, response);
+        if (request.getSession().getAttribute("user")==null){
+            request.setAttribute("nextStep","flightDetail");
+            request.getRequestDispatcher("searchScheduleWithoutLogin.jsp").forward(request, response);
+        }else {
+            request.getRequestDispatcher("showFlightDetail.jsp").forward(request,response);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

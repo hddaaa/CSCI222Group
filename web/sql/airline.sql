@@ -97,7 +97,7 @@ CREATE TABLE `customer` (
   `city` varchar(45) NOT NULL,
   `country` varchar(45) NOT NULL,
   `credit_card_type` varchar(25) NOT NULL,
-  `credit_card_#` varchar(45) NOT NULL,
+  `credit_card_num` varchar(45) NOT NULL,
   `frequent_flier_points_` int(11) NOT NULL,
   `passport_holder` tinyint(1) NOT NULL,
   `is_fly` varchar(12) DEFAULT NULL,

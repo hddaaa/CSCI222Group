@@ -38,7 +38,7 @@ public class CustomerDao{
                 customer.setCity(rs.getString("city"));
                 customer.setCountry(rs.getString("country"));
                 customer.setCreditCard(rs.getString("credit_card_type"));
-                customer.setCardNum(rs.getString("credit_card_#"));
+                customer.setCardNum(rs.getString("credit_card_num"));
                 customer.setFreqFlierPoint(rs.getInt("frequent_flier_points_"));
                 customer.setPassportHolder(rs.getBoolean("passport_holder"));
                 customer.setIsFly(rs.getString("if_fly"));
@@ -74,10 +74,10 @@ public class CustomerDao{
                 customer.setCity(rs.getString("city"));
                 customer.setCountry(rs.getString("country"));
                 customer.setCreditCard(rs.getString("credit_card_type"));
-                customer.setCardNum(rs.getString("credit_card_#"));
+                customer.setCardNum(rs.getString("credit_card_num"));
                 customer.setFreqFlierPoint(rs.getInt("frequent_flier_points_"));
                 customer.setPassportHolder(rs.getBoolean("passport_holder"));
-                customer.setIsFly(rs.getString("if_fly"));
+                customer.setIsFly(rs.getString("is_fly"));
                 customer.setTravelAgent(rs.getString("Travel_Agent"));
                 return customer;
             }
@@ -111,7 +111,7 @@ public class CustomerDao{
                 customer.setCity(rs.getString("city"));
                 customer.setCountry(rs.getString("country"));
                 customer.setCreditCard(rs.getString("credit_card_type"));
-                customer.setCardNum(rs.getString("credit_card_#"));
+                customer.setCardNum(rs.getString("credit_card_num"));
                 customer.setFreqFlierPoint(rs.getInt("frequent_flier_points_"));
                 customer.setPassportHolder(rs.getBoolean("passport_holder"));
                 customer.setIsFly(rs.getString("if_fly"));
@@ -151,7 +151,7 @@ public class CustomerDao{
                 customer.setCity(rs.getString("city"));
                 customer.setCountry(rs.getString("country"));
                 customer.setCreditCard(rs.getString("credit_card_type"));
-                customer.setCardNum(rs.getString("credit_card_#"));
+                customer.setCardNum(rs.getString("credit_card_num"));
                 customer.setFreqFlierPoint(rs.getInt("frequent_flier_points_"));
                 customer.setPassportHolder(rs.getBoolean("passport_holder"));
                 customer.setIsFly(rs.getString("if_fly"));
@@ -169,10 +169,10 @@ public class CustomerDao{
     }
 
     
-    public static void addCustomer(Customer customer) {
+    public static boolean addCustomer(Customer customer) {
         Connection conn = DBConnection.getConn();
         try {
-            String sql = "INSERT INTO customer (title,first_name,last_name,gender,DOB,Phone,email,street_address,state,city,country,credit_card_type,credit_card_#,frequent_flier_points_,passport_holder,is_fly,Travel_Agent) VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO customer (title,first_name,last_name,gender,DOB,Phone,email,street_address,state,city,country,credit_card_type,credit_card_num,frequent_flier_points_,passport_holder,is_fly,Travel_Agent) VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, customer.getTitle());
             preparedStatement.setString(2, customer.getFirstName());
@@ -191,10 +191,11 @@ public class CustomerDao{
             preparedStatement.setBoolean(15, customer.isPassportHolder());
             preparedStatement.setString(16, customer.getIsFly());
             preparedStatement.setString(17, customer.getTravelAgent());
-            preparedStatement.executeUpdate();
+            return preparedStatement.executeUpdate()>0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     
@@ -218,7 +219,7 @@ public class CustomerDao{
     public static boolean updateCustomer(Customer customer) {
         Connection conn = DBConnection.getConn();
         try {
-            String sql = "UPDATE customer SET title=?,first_name=?,last_name=?,gender=?,DOB=?,Phone=?,email=?,street_address=?,state=?,city=?,country=?,credit_card_type=?,credit_card_#=?,frequent_flier_points_=?,passport_holder=?,is_fly=?,Travel_Agent=? WHERE id=?";
+            String sql = "UPDATE customer SET title=?,first_name=?,last_name=?,gender=?,DOB=?,Phone=?,email=?,street_address=?,state=?,city=?,country=?,credit_card_type=?,credit_card_num=?,frequent_flier_points_=?,passport_holder=?,is_fly=?,Travel_Agent=? WHERE id=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, customer.getTitle());
             preparedStatement.setString(2, customer.getFirstName());

@@ -14,15 +14,20 @@ import java.io.IOException;
 /**
  * Created by hdd on 19/05/15.
  */
-@WebServlet(name = "ServiceReservationServlet")
+@WebServlet(name = "ServiceReservationServlet", urlPatterns = {"/ServiceReservation"})
 public class ServiceReservationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String[] serviceAndCost = request.getParameterValues("serviceCheckbox");
+        String[] serviceAndCost = request.getParameterValues("services");
         HttpSession session = request.getSession();
         Ticket ticket = (Ticket) session.getAttribute("ticket");
         ticket = ReservationSystem.serviceReservation(serviceAndCost,ticket);
-        session.setAttribute("ticket",ticket);
-        request.getRequestDispatcher("").forward(request,response);
+        if(ticket!=null) {
+            session.removeAttribute("ticket");
+            request.getRequestDispatcher("success.jsp").forward(request, response);
+        }else {
+            request.setAttribute("errorMessage","reserve service error");
+            request.getRequestDispatcher("error.jsp").forward(request,response);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

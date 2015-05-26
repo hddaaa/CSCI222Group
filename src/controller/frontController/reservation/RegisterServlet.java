@@ -45,9 +45,10 @@ public class RegisterServlet extends HttpServlet {
         user.setAuthority(UserAuthority.Customer);
         boolean result = ReservationSystem.register(customer, user, request.getParameter("pwd"));
         //request.setAttribute("registerResult", result);
-        if(result)
-            request.getRequestDispatcher("home_customer.jsp").forward(request, response);
-        else {
+        if(result) {
+            request.getSession().setAttribute("user", user);
+            response.sendRedirect("homeCustomer.jsp");
+        }else {
             PrintWriter out = response.getWriter();
             out.print("register error");
         }
