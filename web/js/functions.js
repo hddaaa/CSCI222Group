@@ -101,9 +101,19 @@ $(function() {
 	$("#return").click(function() {
 		if($(this).parent().find('input').is(':checked')) {
 			$("#return_date").removeAttr("disabled");
+			$(".bookflightreturntable").css('display', 'table');
 		} else {
 			$("#return_date").attr("disabled", "disabled");
+			$(".bookflightreturntable").css('display', 'none');
 		}
+	});
+	$("#bookflightbutton1").click(function() {
+		$("#bookflight1").css('display', 'none');
+		$("#bookflight2").css('display', 'block');
+	});
+	$("#bookflightbutton2").click(function() {
+		$("#bookflight2").css('display', 'none');
+		$("#bookflight3").css('display', 'block');
 	});
 });
 
