@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+	<link rel="stylesheet" type="text/css" href="css/fms.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <a href="searchScheduleWithoutLogin.jsp?nextStep=login">log in</a>
 
 <form class="form form-aligned" method="post" action="/RegisterServlet">

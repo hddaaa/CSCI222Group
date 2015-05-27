@@ -18,6 +18,8 @@
   Airport sourceAirport = (Airport) request.getAttribute("sourceAirport");
   Airport destinationAirport = (Airport) request.getAttribute("destinationAirport");
 %>
+	<link rel="stylesheet" type="text/css" href="css/fms.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <form method="post" action="/TicketReservation">
 <table>
   <tr>

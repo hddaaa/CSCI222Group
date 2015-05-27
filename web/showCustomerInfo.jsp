@@ -14,6 +14,8 @@
 <html>
 <head>
     <title>Customer Info</title>
+	<link rel="stylesheet" type="text/css" href="css/fms.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 </head>
 <body>
 <form action="/UpdateCustomerInfo" method="post">

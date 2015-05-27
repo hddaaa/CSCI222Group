@@ -15,7 +15,8 @@
     if (request.getAttribute("service")!=null)
         service = (boolean) request.getAttribute("service");
 %>
-
+	<link rel="stylesheet" type="text/css" href="css/fms.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <table>
     <tr>
         <th>Source Airport</th>

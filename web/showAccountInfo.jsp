@@ -12,6 +12,8 @@
 <html>
 <head>
     <title>Account Info</title>
+	<link rel="stylesheet" type="text/css" href="css/fms.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 </head>
 <body>
 <form method="post" action="/AccountInfo">

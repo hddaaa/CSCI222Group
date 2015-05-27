@@ -11,6 +11,8 @@
 <%
   List<ServiceInventory> serviceList = (List<ServiceInventory>) request.getAttribute("serviceList");
 %>
+	<link rel="stylesheet" type="text/css" href="css/fms.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <form method="post" action="/ServiceReservation">
 <table>
   <tr>

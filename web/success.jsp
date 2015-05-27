@@ -9,6 +9,8 @@
 <html>
 <head>
     <title>success</title>
+	<link rel="stylesheet" type="text/css" href="css/fms.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 </head>
 <body>
 success!

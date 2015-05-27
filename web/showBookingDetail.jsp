@@ -12,6 +12,8 @@
     Map<String, String> booking = (Map<String, String>) request.getAttribute("booking");
     SeatMap seatMap = (SeatMap) request.getAttribute("seatMap");
 %>
+	<link rel="stylesheet" type="text/css" href="css/fms.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <table>
     <tr>
         <th>Passage</th>

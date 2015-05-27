@@ -13,6 +13,8 @@
 <html>
 <head>
     <title>Credit Card Info</title>
+	<link rel="stylesheet" type="text/css" href="css/fms.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 </head>
 <body>
 <form action="/UpdateCustomerInfo" method="post">
