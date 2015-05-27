@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by hdd on 16/05/15.
  */
-@WebServlet(name = "ShowServiceInventoryServlet")
+@WebServlet(name = "ShowServiceInventoryServlet", urlPatterns = {"/ShowServiceInventory"})
 public class ShowServiceInventoryServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doGet(request, response);
@@ -24,6 +24,6 @@ public class ShowServiceInventoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<ServiceInventory> inventoryList = ServiceSystem.showServiceInventory();
         request.setAttribute("inventoryList", inventoryList);
-        request.getRequestDispatcher("").forward(request, response);
+        request.getRequestDispatcher("showAllServiceInventory.jsp").forward(request, response);
     }
 }

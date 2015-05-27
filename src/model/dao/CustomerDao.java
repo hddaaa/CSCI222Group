@@ -41,7 +41,7 @@ public class CustomerDao{
                 customer.setCardNum(rs.getString("credit_card_num"));
                 customer.setFreqFlierPoint(rs.getInt("frequent_flier_points_"));
                 customer.setPassportHolder(rs.getBoolean("passport_holder"));
-                customer.setIsFly(rs.getString("if_fly"));
+                customer.setIsFly(rs.getString("is_fly"));
                 customer.setTravelAgent(rs.getString("Travel_Agent"));
                 return customer;
             }
@@ -114,7 +114,7 @@ public class CustomerDao{
                 customer.setCardNum(rs.getString("credit_card_num"));
                 customer.setFreqFlierPoint(rs.getInt("frequent_flier_points_"));
                 customer.setPassportHolder(rs.getBoolean("passport_holder"));
-                customer.setIsFly(rs.getString("if_fly"));
+                customer.setIsFly(rs.getString("is_fly"));
                 customer.setTravelAgent(rs.getString("Travel_Agent"));
                 list.add(customer);
             }
@@ -154,7 +154,7 @@ public class CustomerDao{
                 customer.setCardNum(rs.getString("credit_card_num"));
                 customer.setFreqFlierPoint(rs.getInt("frequent_flier_points_"));
                 customer.setPassportHolder(rs.getBoolean("passport_holder"));
-                customer.setIsFly(rs.getString("if_fly"));
+                customer.setIsFly(rs.getString("is_fly"));
                 customer.setTravelAgent(rs.getString("Travel_Agent"));
                 list.add(customer);
             }

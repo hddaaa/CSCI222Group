@@ -52,20 +52,42 @@ public class UserDao {
         }
         return null;
     }
-    public static boolean updateUser(User user,String pwd){
+    public static boolean updateUser(User user,String oldpwd,String newUsername,String newpwd){
         Connection conn = DBConnection.getConn();
         try {
-            String sql = "UPDATE user SET username=?,pwd=MD5(?),authority=?,availability=?";
+            String sql = "SELECT * FROM user WHERE username=? AND pwd=MD5(?) AND id=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setString(2, pwd);
-            preparedStatement.setString(3, user.getAuthority().toString());
-            preparedStatement.setBoolean(4, user.isAvailability());
-            return preparedStatement.executeUpdate()>0;
+            preparedStatement.setString(2, oldpwd);
+            preparedStatement.setInt(3,user.getId());
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()) {
+                sql = "UPDATE user SET username=?,pwd=MD5(?) WHERE id=?";
+                preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setString(1, newUsername);
+                preparedStatement.setString(2, newpwd);
+                preparedStatement.setInt(3,user.getId());
+                return preparedStatement.executeUpdate() > 0;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
 
+    public static boolean updateUser(User user){
+        Connection conn = DBConnection.getConn();
+        try {
+            String sql = "UPDATE user SET username=?,authority=?,availability=? WHERE id=?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getAuthority().toString());
+            preparedStatement.setBoolean(3, user.isAvailability());
+            preparedStatement.setInt(4,user.getId());
+            return preparedStatement.executeUpdate()>0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

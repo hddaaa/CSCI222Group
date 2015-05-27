@@ -18,7 +18,7 @@ import java.util.List;
  * Created by hdd on 15/05/15.
  */
 public class ReportSystem {
-    public CustomerReport getCustomerReport(String customerEmail) {
+    public static CustomerReport getCustomerReport(String customerEmail) {
         try {
 
             Customer customer = CustomerDao.getCustomerByEmail(customerEmail);
@@ -41,7 +41,7 @@ public class ReportSystem {
         return null;
     }
 
-    public AgentReport getAgentReport(String agentEmail) {
+    public static AgentReport getAgentReport(String agentEmail) {
         try {
             Agent agent = AgentDao.getAgentByEmail(agentEmail);
             List<Ticket> tickets = TicketDao.getAllTicketFormAgent(agent.getId());
@@ -66,7 +66,7 @@ public class ReportSystem {
         return null;
     }
 
-    public PassengerReport getPassengerReport() {
+    public static PassengerReport getPassengerReport() {
         try {
             List<Customer> customers = CustomerDao.getAllCustomer();
             int isNoFluNum = 0, passportHolder = 0, pWithoutA = 0;

@@ -27,7 +27,6 @@ public class SearchScheduleServlet extends HttpServlet {
         String sourceAirport = request.getParameter("sourceAirport");
         String destinationAirport = request.getParameter("destinationAirport");
         String[] isReturn = request.getParameterValues("isReturn");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         request.getSession().setAttribute("return",null);
         Date departureDate=ParseDateUtil.parseDate(request.getParameter("departureDate"));
         List<Schedule> schedules = ReservationSystem.searchSchedule(sourceAirport, destinationAirport, departureDate);

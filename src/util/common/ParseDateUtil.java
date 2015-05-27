@@ -25,4 +25,9 @@ public class ParseDateUtil {
         }
         return null;
     }
+    public static String formatDateToyMd(Date date){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
+    }
 }

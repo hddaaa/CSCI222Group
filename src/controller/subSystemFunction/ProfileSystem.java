@@ -2,8 +2,11 @@ package controller.subSystemFunction;
 
 import model.dao.AgentDao;
 import model.dao.CustomerDao;
+import model.dao.UserDao;
 import model.entity.Agent;
 import model.entity.Customer;
+import model.entity.User;
+import util.Enum.UserAuthority;
 import util.common.DataNotFoundException;
 
 import java.util.List;
@@ -26,6 +29,32 @@ public class ProfileSystem {
 
         return CustomerDao.updateCustomer(customer);
     }
+
+    public static boolean editUser(User user){
+        return UserDao.updateUser(user);
+    }
+
+    public static User editUser(User user,String oldpwd,String newUsername,String newpwd){
+
+        if (UserDao.updateUser(user, oldpwd, newUsername, newpwd)){
+            if(user.getAuthority()== UserAuthority.Customer) {
+                try {
+                    Customer customer = CustomerDao.getCustomerByEmail(user.getUsername());
+                    customer.setEmail(newUsername);
+                    if (!CustomerDao.updateCustomer(customer)){
+                        return null;
+                    }
+                } catch (DataNotFoundException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+            user.setUsername(newUsername);
+            return user;
+        }
+        return null;
+    }
+
 
     public static Agent agentInfo(String agentEmail) {
         try {

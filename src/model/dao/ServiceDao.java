@@ -18,7 +18,7 @@ public class ServiceDao {
     public static Service getService(int id) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {
-            String sql = "SELECT * FROM sevice WHERE id=?";
+            String sql = "SELECT * FROM service WHERE id=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();

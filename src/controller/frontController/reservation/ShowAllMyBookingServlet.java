@@ -30,6 +30,8 @@ public class ShowAllMyBookingServlet extends HttpServlet {
         }else{
             List<Map<String, String>> bookingsList = ReservationSystem.getAllBookingsFromACustomer(user.getUsername());
             request.setAttribute("bookingsList",bookingsList);
+            if(request.getParameter("service")!=null)
+                request.setAttribute("service",true);
             request.getRequestDispatcher("showAllMyBooking.jsp").forward(request,response);
         }
     }

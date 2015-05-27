@@ -5,7 +5,7 @@
 <%
   if(session.getAttribute("user")==null){
     response.sendRedirect("index.jsp");
-  }
+  }else{
   User user = (User) session.getAttribute("user");
   Customer customer = CustomerDao.getCustomerByEmail(user.getUsername());
 %>
@@ -69,16 +69,16 @@
           <li id="res_2"><a href='/ShowAllMyBookings' target="iframe" class="push_button blue">My Bookings</a></li>
         </ul>
         <ul id="t2_2">
-          <li id="pro_1"><a href='#' target="iframe" class="push_button blue">Account Settings</a></li>
-          <li id="pro_2"><a href='#' target="iframe" class="push_button blue">Personal Information</a></li>
-          <li id="pro_3"><a href='#' target="iframe" class="push_button blue">Credit Card</a></li>
+          <li id="pro_1"><a href='/AccountInfo' target="iframe" class="push_button blue">Account Settings</a></li>
+          <li id="pro_2"><a href='/ShowCustomerInfo' target="iframe" class="push_button blue">Personal Information</a></li>
+          <li id="pro_3"><a href='/ShowCreditCardInfo' target="iframe" class="push_button blue">Credit Card</a></li>
         </ul>
         <ul id="t2_3">
-          <li id="ser_1"><a href='#' target="iframe" class="push_button blue">Our Services</a></li>
-          <li id="ser_2"><a href='#' target="iframe" class="push_button blue">Change Flight Services</a></li>
+          <li id="ser_1"><a href='/ShowServiceInventory' target="iframe" class="push_button blue">Our Services</a></li>
+          <li id="ser_2"><a href='/ShowAllMyBookings?service=true' target="iframe" class="push_button blue">Change Flight Services</a></li>
         </ul>
         <ul id="t2_4">
-          <li id="rep_1"><a href='#' target="iframe" class="push_button blue">My Report</a></li>
+          <li id="rep_1"><a href='/CustomerReport' target="iframe" class="push_button blue">My Report</a></li>
         </ul>
       </div>
       <div class="inner_frame">
@@ -95,3 +95,4 @@
 </div>
 </body>
 </html>
+<%}%>

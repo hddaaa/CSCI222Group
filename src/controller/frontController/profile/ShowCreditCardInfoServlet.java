@@ -14,10 +14,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by hdd on 16/05/15.
+ * Created by hdd on 27/05/15.
  */
-@WebServlet(name = "ShowCustomerInfoServlet",urlPatterns = {"/ShowCustomerInfo"})
-public class ShowCustomerInfoServlet extends HttpServlet {
+@WebServlet(name = "ShowCreditCardInfoServlet",urlPatterns = {"/ShowCreditCardInfo"})
+public class ShowCreditCardInfoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -27,10 +27,11 @@ public class ShowCustomerInfoServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
         if (user.getAuthority() == UserAuthority.Customer) {
             Customer customer = ProfileSystem.customerInfo(user.getUsername());
-            request.setAttribute("customer", customer);
-            request.getRequestDispatcher("showCustomerInfo.jsp").forward(request, response);
+            request.setAttribute("creditCard", customer.getCreditCard());
+            request.setAttribute("cardNum",customer.getCardNum());
+            request.getRequestDispatcher("showCreditCardInfo.jsp").forward(request,response);
         }else {
-            request.setAttribute("errorMessage","show customer information error: wrong authority");
+            request.setAttribute("errorMessage","show customer credit information error: wrong authority");
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 

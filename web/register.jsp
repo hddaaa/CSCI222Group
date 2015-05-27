@@ -27,8 +27,11 @@
     </div>
 
     <div class="control-group">
-        <label for="gender">gender:</label>
-        <input id="gender" type="text" name="gender"><br><br>
+        <label for="genderMale">Male:</label>
+        <input id="genderMale" type="radio" name="gender" value="Male">
+        <label for="genderFemale">Female:</label>
+        <input id="genderFemale" type="radio" name="gender" value="Female">
+        <br><br>
     </div>
 
     <div class="control-group">
