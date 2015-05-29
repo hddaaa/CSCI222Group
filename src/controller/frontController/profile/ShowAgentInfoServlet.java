@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by hdd on 16/05/15.
  */
-@WebServlet(name = "ShowAgentInfoServlet")
+@WebServlet(name = "ShowAgentInfoServlet",urlPatterns = {"/ShowAgentInfo"})
 public class ShowAgentInfoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -26,10 +26,15 @@ public class ShowAgentInfoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        Agent agent = ProfileSystem.agentInfo(user.getUsername());
-        List<Customer> customerList = ProfileSystem.showAgentCustomerList(agent.getName());
+        Agent agent = ProfileSystem.agentDetail(user.getUsername());
         request.setAttribute("agent", agent);
-        request.setAttribute("customerList", customerList);
-        request.getRequestDispatcher("").forward(request, response);
+        if(request.getParameter("action")!=null&&request.getParameter("action").equals("list")){
+            List<Customer> customerList = ProfileSystem.showAgentCustomerList(agent.getName());
+            request.setAttribute("customerList", customerList);
+            request.getRequestDispatcher("showAgentsCustomerList.jsp").forward(request, response);
+        }else{
+            request.setAttribute("agent", agent);
+            request.getRequestDispatcher("showAgentInfo.jsp").forward(request, response);
+        }
     }
 }

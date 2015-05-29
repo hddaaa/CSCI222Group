@@ -2,6 +2,7 @@ package controller.subSystemFunction;
 
 import model.dao.*;
 import model.entity.*;
+import util.Enum.UserAuthority;
 import util.common.DataNotFoundException;
 import util.common.MathUtil;
 import util.common.ParseDateUtil;
@@ -44,7 +45,18 @@ public class ReservationSystem {
         }
 
     }
+    public static List searchScheduleForModify(String sourceAirport, String destinationAirport) {
+        try {
+            Route route = RouteDao.getRoute(sourceAirport, destinationAirport);
+            List<Schedule> scheduleList = ScheduleDao.getScheduleInRoute(route.getId());
+            return scheduleList;
 
+        } catch (DataNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
     public static Ticket ticketDetail(int ticketId) {
         try {
             Ticket ticket = TicketDao.getTicket(ticketId);
@@ -55,6 +67,22 @@ public class ReservationSystem {
         return null;
     }
 
+    public static Customer customerDetail(int customerId){
+        try {
+            return CustomerDao.getCustomer(customerId);
+        } catch (DataNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public static Customer customerDetail(String customerEmail){
+        try {
+            return CustomerDao.getCustomerByEmail(customerEmail);
+        } catch (DataNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public static Schedule scheduleDetail(int scheduleId) {
         try {
             Schedule schedule = ScheduleDao.getSchedule(scheduleId);
@@ -271,7 +299,7 @@ public class ReservationSystem {
                 bookingMap.put("serviceCost", "" + ticket.getServiceCost());
                 bookingMap.put("flightCost", "" + ticket.getFlightCost());
                 bookingMap.put("fareClass", "" + ticket.getFareClass());
-                bookingMap.put("seat", "" + ticket.getSeat());
+                bookingMap.put("seat", "" + (ticket.getSeat()+1));
                 Schedule schedule = ScheduleDao.getSchedule(ticket.getScheduleId());
                 Route route = RouteDao.getRoute(schedule.getRoute());
                 Airport sourceAirport = AirportDao.getAirport(route.getSourceAirport());
@@ -299,7 +327,7 @@ public class ReservationSystem {
             bookingMap.put("serviceCost", "" + ticket.getServiceCost());
             bookingMap.put("flightCost", "" + ticket.getFlightCost());
             bookingMap.put("fareClass", "" + ticket.getFareClass());
-            bookingMap.put("seat", "" + ticket.getSeat());
+            bookingMap.put("seat", "" + (ticket.getSeat()+1));
             bookingMap.put("customer", customer.getFirstName() + " " + customer.getLastName());
             bookingMap.put("email", customer.getEmail());
             Schedule schedule = ScheduleDao.getSchedule(ticket.getScheduleId());
@@ -348,10 +376,10 @@ public class ReservationSystem {
     public static Ticket switchSeat(Ticket thisTicket, int seatNum) {
         try {
             SeatMap seatMap = SeatMapDao.getSeatMap(thisTicket.getScheduleId());
-            List<Integer> map = seatMap.getMap();
-            Ticket otherTicket = TicketDao.getTicket(map.get(seatNum), thisTicket.getScheduleId());
-            map.set(seatNum, thisTicket.getCustomerId());
-            map.set(thisTicket.getSeat(), otherTicket.getCustomerId());
+            List map = seatMap.getMap();
+            Ticket otherTicket = TicketDao.getTicket((int)(double)map.get(seatNum), thisTicket.getScheduleId());
+            map.set(seatNum, (double)thisTicket.getCustomerId());
+            map.set(thisTicket.getSeat(), (double)otherTicket.getCustomerId());
             seatMap.setMap(map);
             SeatMapDao.updateSeatMap(seatMap);
             otherTicket.setSeat(thisTicket.getSeat());
@@ -379,7 +407,7 @@ public class ReservationSystem {
             Service service = ServiceDao.getService(serviceId);
             Ticket ticket = TicketDao.getTicket(service.getTicketId());
             ticket.setServiceCost(ticket.getServiceCost() - service.getCost());
-            ticket.setTotal(ticket.getServiceCost()+ticket.getFlightCost());
+            ticket.setTotal(ticket.getServiceCost() + ticket.getFlightCost());
             return TicketDao.updateTicket(ticket)&&ServiceDao.delService(serviceId);
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -412,6 +440,98 @@ public class ReservationSystem {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static List<ServiceInventory> getServiceNotInTicket(int ticketId){
+        Ticket ticket = ReservationSystem.ticketDetail(ticketId);
+        List<ServiceInventory> allServices = ReservationSystem.getServiceForSchedule(ticket.getScheduleId());
+        List<Service> orderedServices = ReservationSystem.getServiceList(ticketId);
+        List<ServiceInventory> findServices =new ArrayList<>();
+        boolean flag = false;
+        for(ServiceInventory si : allServices){
+            flag = false;
+            for(Service s : orderedServices){
+                if (s.getItem().equals(si.getItem())){
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag)
+                findServices.add(si);
+        }
+        if (findServices.isEmpty())
+            return null;
+        return findServices;
+    }
+
+    public static boolean changeUsernameByStaff(User user, String oldUsername,String newUsername){
+        if(user.getAuthority().compareTo(UserAuthority.Staff)>=0){
+            return UserDao.changeUsername(oldUsername, newUsername);
+        }else
+            return false;
+    }
+    public static String addSchedule(int fleetId,String sAirport,String dAirport,Date dTime,Date aTime){
+        Route route=null;
+        try {
+            route = RouteDao.getRoute(sAirport,dAirport);
+
+        } catch (DataNotFoundException e) {
+            Route newRoute = new Route(sAirport,dAirport,false,0);
+            RouteDao.addRoute(newRoute);
+            try {
+                route = RouteDao.getRoute(sAirport,dAirport);
+            } catch (DataNotFoundException e1) {
+                e1.printStackTrace();
+            }
+        }
+        try {
+            List<Schedule> scheduleList = ScheduleDao.getAllSchedule();
+            Random random = new Random();
+            boolean flag = false;
+            String flightId =null;
+            while (!flag){
+                flag=true;
+                flightId ="QF"+(random.nextInt(9000)+1000);
+                for(Schedule schedule: scheduleList){
+                    if(schedule.getFlightID().equals(flightId)){
+                        flag=false;
+                        break;
+                    }
+                }
+            }
+            Schedule schedule = new Schedule(flightId,fleetId,route.getId(),dTime,aTime);
+            ScheduleDao.addSchedule(schedule);
+            return flightId;
+        } catch (DataNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public static boolean modifySchedule(int scheduleId, int fleetId,String sAirport,String dAirport,Date dTime,Date aTime){
+        Route route=null;
+        try {
+            route = RouteDao.getRoute(sAirport,dAirport);
+
+        } catch (DataNotFoundException e) {
+            Route newRoute = new Route(sAirport,dAirport,false,0);
+            RouteDao.addRoute(newRoute);
+            try {
+                route = RouteDao.getRoute(sAirport,dAirport);
+            } catch (DataNotFoundException e1) {
+                e1.printStackTrace();
+            }
+        }
+        try {
+            Schedule schedule = ScheduleDao.getSchedule(scheduleId);
+            schedule.setPlane(fleetId);
+            schedule.setRoute(route.getId());
+            schedule.setDepartTime(dTime);
+            schedule.setArrivedTime(aTime);
+            return ScheduleDao.updateSchedule(schedule);
+        } catch (DataNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
 

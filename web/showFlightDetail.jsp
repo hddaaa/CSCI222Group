@@ -74,5 +74,5 @@
 </select>
   <br>
   <br>
-  <input type="submit" value="next">
+  <input class="button button-primary" type="submit" value="next">
 </form>

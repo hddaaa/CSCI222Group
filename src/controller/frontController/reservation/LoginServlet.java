@@ -23,8 +23,21 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("errorMessage","login fail: wrong username or password");
             request.getRequestDispatcher("errorWithoutLogin.jsp").forward(request,response);
         }else{
-            request.getSession().setAttribute("user",user);
-            response.sendRedirect("homeCustomer.jsp");
+            request.getSession().setAttribute("user", user);
+            switch (user.getAuthority()){
+                case Customer:
+                    response.sendRedirect("homeCustomer.jsp");
+                    break;
+                case Agent:
+                    response.sendRedirect("homeAgent.jsp");
+                    break;
+                case Staff:
+                case ServiceManager:
+                case FlightManager:
+                case Admin:
+                    response.sendRedirect("homeStaff.jsp");
+                    break;
+            }
         }
     }
 

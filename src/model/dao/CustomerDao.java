@@ -248,4 +248,21 @@ public class CustomerDao{
         }
         return false;
     }
+
+    public static boolean updateAgentNameForCustomer(String oldAgentName,String newAgentName) {
+        Connection conn = DBConnection.getConn();
+        try {
+            String sql = "UPDATE customer SET Travel_Agent=? WHERE Travel_Agent=?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, newAgentName);
+            preparedStatement.setString(2, oldAgentName);
+            int col = preparedStatement.executeUpdate();
+            if (col > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

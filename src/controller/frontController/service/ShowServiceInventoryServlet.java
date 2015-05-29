@@ -24,6 +24,9 @@ public class ShowServiceInventoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<ServiceInventory> inventoryList = ServiceSystem.showServiceInventory();
         request.setAttribute("inventoryList", inventoryList);
-        request.getRequestDispatcher("showAllServiceInventory.jsp").forward(request, response);
+        if(request.getParameter("action")!=null&&request.getParameter("action").equals("edit")){
+            request.setAttribute("action","edit");
+        }
+            request.getRequestDispatcher("showAllServiceInventory.jsp").forward(request, response);
     }
 }

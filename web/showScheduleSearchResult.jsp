@@ -18,7 +18,7 @@
 %>
 	<link rel="stylesheet" type="text/css" href="css/fms.css">
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-<form action="/ShowFlightDetail" method="post">
+<form>
     <h1>Schedule</h1>
     <table>
         <tr>
@@ -63,7 +63,7 @@
                         "<td>" + ParseDateUtil.formatDate(rs.getDepartTime(), destinationAirport.getDatabase_timezone()) + "</td>" +
                         "<td>" + sourceAirport.getCity() + "</td>" +
                         "<td>" + ParseDateUtil.formatDate(rs.getArrivedTime(), sourceAirport.getDatabase_timezone()) + "</td>" +
-                        "<td><input type='radio'" + (rs.equals(schedules.get(0)) ? " checked='checked'" : "") + " name='returnScheduleId' value='" + rs.getId() + "' />" +
+                        "<td><input type='radio'" + (rs.equals(returnSchedules.get(0)) ? " checked='checked'" : "") + " name='returnScheduleId' value='" + rs.getId() + "' />" +
                         "</tr>");
             }
         %>
@@ -71,8 +71,16 @@
     <input type="hidden" name="return" value="return">
     <%
         }
+        if(request.getAttribute("action")==null){
     %>
-    <input type="submit" value="next">
+    <input class="button button-primary" type="submit" value="next" formmethod="post" formaction="/ShowFlightDetail">
+    <%
+        }else {
+    %>
+    <input class="button button-primary" type="submit" value="next" formmethod="get" formaction="/ModifySchedule">
+    <%
+        }
+    %>
 </form>
 <%
     }else {

@@ -13,6 +13,8 @@
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 </head>
 <body>
-success!
+<h1>success!</h1>
+<br>
+<h2><%=request.getAttribute("successMessage")!=null?(String)request.getAttribute("successMessage"):""%></h2>
 </body>
 </html>

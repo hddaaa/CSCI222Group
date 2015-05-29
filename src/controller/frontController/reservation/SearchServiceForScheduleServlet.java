@@ -24,10 +24,18 @@ public class SearchServiceForScheduleServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Ticket ticket = (Ticket) session.getAttribute("ticket");
-        List<ServiceInventory> serviceList = ReservationSystem.getServiceForSchedule(ticket.getScheduleId());
+        List<ServiceInventory> serviceList=null;
+        if(request.getParameter("ticketId")!=null){
+            int ticketId = Integer.parseInt(request.getParameter("ticketId"));
+            request.getSession().setAttribute("ticket",ReservationSystem.ticketDetail(ticketId));
+            serviceList=ReservationSystem.getServiceNotInTicket(ticketId);
+        }else {
+            HttpSession session = request.getSession();
+            Ticket ticket = (Ticket) session.getAttribute("ticket");
+            serviceList = ReservationSystem.getServiceForSchedule(ticket.getScheduleId());
+
+        }
         request.setAttribute("serviceList", serviceList);
-        request.getRequestDispatcher("showSearchServiceResult.jsp").forward(request,response);
+        request.getRequestDispatcher("showSearchServiceResult.jsp").forward(request, response);
     }
 }

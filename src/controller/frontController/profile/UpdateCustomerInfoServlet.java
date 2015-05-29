@@ -1,6 +1,7 @@
 package controller.frontController.profile;
 
 import controller.subSystemFunction.ProfileSystem;
+import controller.subSystemFunction.ReservationSystem;
 import model.entity.Customer;
 import model.entity.User;
 import util.Enum.UserAuthority;
@@ -24,12 +25,9 @@ public class UpdateCustomerInfoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean result=false;
         User user = (User) request.getSession().getAttribute("user");
-        if (user.getAuthority()!= UserAuthority.Customer){
-            request.setAttribute("errorMessage", "update customer information error: wrong authority");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-            return;
-        }
-        Customer customer = ProfileSystem.customerInfo(user.getUsername());
+        String customerEmail = request.getParameter("customerEmail");
+
+        Customer customer = ProfileSystem.customerInfo(customerEmail);
         // if update customer information
         if(request.getParameter("action").equals("updateInfo")) {
             customer.setTitle(request.getParameter("title"));
@@ -48,9 +46,15 @@ public class UpdateCustomerInfoServlet extends HttpServlet {
             customer.setCountry(request.getParameter("country"));
             customer.setPassportHolder(request.getParameter("passportHolder") != null);
             result = ProfileSystem.editCustomer(customer);
-            if (!request.getParameter("email").equals(user.getUsername())) {
-                user.setUsername(request.getParameter("email"));
-                result = result && ProfileSystem.editUser(user);
+            if (user.getAuthority()!= UserAuthority.Customer){
+                if (!request.getParameter("email").equals(customerEmail)) {
+                    result = result && ReservationSystem.changeUsernameByStaff(user,customerEmail,request.getParameter("email"));
+                }
+            }else {
+                if (!request.getParameter("email").equals(user.getUsername())) {
+                    user.setUsername(request.getParameter("email"));
+                    result = result && ProfileSystem.editUser(user);
+                }
             }
 
         }

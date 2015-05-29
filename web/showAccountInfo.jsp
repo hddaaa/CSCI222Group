@@ -31,7 +31,7 @@
       <label for="newpwd">new password:</label>
       <input id="newpwd" type="password" name="newpwd"><br><br>
     </div>
-    <input type="submit" value="update Info">
+    <input class="button button-primary" type="submit" value="update Info">
   </fieldset>
 </form>
 </body>

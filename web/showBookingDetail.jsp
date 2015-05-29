@@ -1,5 +1,9 @@
 <%@ page import="model.entity.SeatMap" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="model.entity.User" %>
+<%@ page import="util.Enum.UserAuthority" %>
+<%@ page import="model.entity.Customer" %>
+<%@ page import="controller.subSystemFunction.ReservationSystem" %>
 <%--
   Created by IntelliJ IDEA.
   User: hdd
@@ -9,6 +13,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    User user = (User) session.getAttribute("user");
     Map<String, String> booking = (Map<String, String>) request.getAttribute("booking");
     SeatMap seatMap = (SeatMap) request.getAttribute("seatMap");
 %>
@@ -72,4 +77,30 @@
         <input type="submit" value="Change Seat">
     </fieldset>
 </form>
+
+<%
+
+    if(user.getAuthority().compareTo(UserAuthority.Staff)>=0){
+%>
+<form method="post" action="/SwitchSeat">
+    <fieldset>
+        <legend>Change Seat</legend>
+        <select name="newSeatNum">
+            <%
+                for (int i = 0; i < seatMap.getMap().size(); i++) {
+                    if (((double) seatMap.getMap().get(i)) != -1) {
+                        Customer customer = ReservationSystem.customerDetail((int) (double) seatMap.getMap().get(i));
+                        out.print("<option value='" + i + "'>" + (i + 1)+",user: "+customer.getFirstName()+" "+customer.getLastName() + "</option>");
+                    }
+                }
+            %>
+        </select>
+        <input type="submit" value="Switch Seat">
+    </fieldset>
+</form>
+
+<%
+    }
+%>
+
 <button type="button" onclick="window.location=''">change flight</button>

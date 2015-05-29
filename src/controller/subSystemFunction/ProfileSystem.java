@@ -34,6 +34,10 @@ public class ProfileSystem {
         return UserDao.updateUser(user);
     }
 
+    public static boolean editUser(User user, String pwd){
+        return UserDao.updateUser(user,pwd);
+    }
+
     public static User editUser(User user,String oldpwd,String newUsername,String newpwd){
 
         if (UserDao.updateUser(user, oldpwd, newUsername, newpwd)){
@@ -56,7 +60,7 @@ public class ProfileSystem {
     }
 
 
-    public static Agent agentInfo(String agentEmail) {
+    public static Agent agentDetail(String agentEmail) {
         try {
             Agent agent = AgentDao.getAgentByEmail(agentEmail);
             return agent;
@@ -64,6 +68,28 @@ public class ProfileSystem {
             e.printStackTrace();
         }
         return null;
+    }
+    public static boolean updateAgentInfo(int agentId,String name,String email,String phone) {
+
+        try {
+            boolean result = true;
+            Agent agent = AgentDao.getAgent(agentId);
+            User user = UserDao.getUser(agent.getEmail());
+            if(!agent.getEmail().equals(email)){
+                result = result&&UserDao.changeUsername(agent.getEmail(),email);
+            }
+            if(!agent.getName().equals(name)){
+                result = result&&CustomerDao.updateAgentNameForCustomer(agent.getName(),name);
+            }
+            agent.setEmail(email);
+            agent.setName(name);
+            agent.setPhone(phone);
+            result=result&&AgentDao.updateAgent(agent);
+            return result;
+        } catch (DataNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static List<Customer> showAgentCustomerList(String agentName) {
@@ -107,6 +133,17 @@ public class ProfileSystem {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static boolean addStuff(User user,String pwd){
+        return UserDao.register(user,pwd);
+    }
+    public static User getStuff(User user,String username){
+        if(user.getAuthority()!=UserAuthority.Admin){
+            return null;
+        }
+        User thisUser = UserDao.getUser(username);
+        return thisUser;
     }
 
 }

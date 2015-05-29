@@ -13,8 +13,8 @@
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 </head>
 <body>
-error!
+<h1>error!</h1>
 <br>
-<%=request.getAttribute("errorMessage")%>
+<h2><%=request.getAttribute("errorMessage")!=null?(String)request.getAttribute("errorMessage"):""%></h2>
 </body>
 </html>

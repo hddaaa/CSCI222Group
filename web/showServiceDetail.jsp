@@ -8,16 +8,20 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-  List<Service> serviceList = (List<Service>) request.getAttribute("serviceList");
-%>
 <html>
 <head>
-    <title></title>
-	<link rel="stylesheet" type="text/css" href="css/fms.css">
-	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="css/fms.css">
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 </head>
 <body>
+<%
+  int ticketId = (int) request.getAttribute("ticketId");
+  if(request.getAttribute("serviceList")!=null){
+    List<Service> serviceList = (List<Service>) request.getAttribute("serviceList");
+
+%>
+
 <table>
   <tr>
     <th>Service</th>
@@ -30,12 +34,20 @@
     <td><%=s.getItem()%></td>
     <td><%=s.getCost()%></td>
     <td>
-      <button type="button" onclick="window.location='/DeleteServiceFromTicket?serviceId=<%=s.getId()%>&ticketId=<%=s.getTicketId()%>'">Delete</button>
+      <button class="button button-primary" type="button" onclick="window.location='/DeleteServiceFromTicket?serviceId=<%=s.getId()%>&ticketId=<%=ticketId%>'">Delete</button>
     </td>
   </tr>
   <%
     }
   %>
 </table>
+<%
+}else{
+%>
+<h1>no service in this ticket</h1>
+<%
+  }
+%>
+<button class="button button-primary" type="button" onclick="window.location='/SearchServiceForSchedule?ticketId=<%=ticketId%>'">Add New Service</button>
 </body>
 </html>

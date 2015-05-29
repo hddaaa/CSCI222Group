@@ -24,6 +24,7 @@ public class ShowServiceDetailServlet extends HttpServlet {
         int ticketId = Integer.parseInt(request.getParameter("ticketId"));
         List<Service> serviceList = ReservationSystem.getServiceList(ticketId);
         request.setAttribute("serviceList",serviceList);
+        request.setAttribute("ticketId",ticketId);
         request.getRequestDispatcher("showServiceDetail.jsp").forward(request,response);
     }
 }

@@ -85,6 +85,7 @@
     </div>
     <br>
     <input type="hidden" name="action" value="updateInfo">
+    <input type="hidden" name="customerEmail" value="<%=customer.getEmail()%>">
     <input class="button button-primary" type="submit" value="update">
   </fieldset>
 </form>

@@ -48,9 +48,9 @@
         </td>
         <td>
             <%if (!service){%>
-            <button type="button" onclick="window.location='/ShowBookingDetail?ticketId=<%=booking.get("ticketId")%>'">Detail</button>
+            <button type="button" class="button button-primary" onclick="window.location='/ShowBookingDetail?ticketId=<%=booking.get("ticketId")%>'">Detail</button>
             <%}else{%>
-            <button type="button" onclick="window.location='/ShowServiceDetail?ticketId=<%=booking.get("ticketId")%>'">Service Detail</button>
+            <button type="button" class="button button-primary" onclick="window.location='/ShowServiceDetail?ticketId=<%=booking.get("ticketId")%>'">Service Detail</button>
             <%}%>
         </td>
     </tr>

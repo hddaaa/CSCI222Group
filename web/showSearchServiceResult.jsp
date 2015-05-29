@@ -9,6 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+  if (request.getAttribute("serviceList")!=null){
   List<ServiceInventory> serviceList = (List<ServiceInventory>) request.getAttribute("serviceList");
 %>
 	<link rel="stylesheet" type="text/css" href="css/fms.css">
@@ -35,3 +36,11 @@
 </table>
 <input type="submit" value="Add to my Ticket">
 </form>
+<%
+}else{
+
+%>
+<h1>no extra services are found</h1>
+<%
+  }
+%>

@@ -30,7 +30,7 @@
 <div class="box searchflight">
   <h2>Search Flights</h2>
 
-  <form class="form form-aligned" method="post" action="/SearchSchedule">
+  <form class="form form-aligned">
     <fieldset>
       <div class="control-group">
         <label for="source">Origin</label>
@@ -48,6 +48,9 @@
               out.print("<option value='" + a.getIATA_FAA() + "'>" + a.getCity() + ", " + a.getCountry() + "</option>");%>
         </select>
       </div>
+      <%if (request.getAttribute("action")==null){
+
+      %>
       <div class="control-group">
         <label for="depart_date">Departure Date</label>
         <input id="depart_date" type="date" name="departureDate">
@@ -65,8 +68,15 @@
         <input id="passengers" type="number" min="1" value="1" name="passageNum">
       </div>
       <div class="controls">
-        <button type="submit" class="button button-primary">Submit</button>
+        <input type="submit" class="button button-primary" value="Submit" formaction="/SearchSchedule" formmethod="post">
       </div>
+          <%
+            }else {
+          %>
+      <input type="submit" class="button button-primary" value="Submit" formaction="/SearchScheduleForModify" formmethod="post">
+      <%
+        }
+      %>
     </fieldset>
   </form>
 </div>

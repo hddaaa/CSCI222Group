@@ -21,19 +21,13 @@
                 response.sendRedirect("homeCustomer.jsp");
                 break;
             case Agent:
-                response.sendRedirect("homeCustomer.jsp");
+                response.sendRedirect("homeAgent.jsp");
                 break;
-            case Stuff:
-                response.sendRedirect("homeCustomer.jsp");
-                break;
+            case Staff:
             case ServiceManager:
-                response.sendRedirect("homeCustomer.jsp");
-                break;
             case FlightManager:
-                response.sendRedirect("homeCustomer.jsp");
-                break;
             case Admin:
-                response.sendRedirect("homeCustomer.jsp");
+                response.sendRedirect("homeStaff.jsp");
                 break;
         }
     }
