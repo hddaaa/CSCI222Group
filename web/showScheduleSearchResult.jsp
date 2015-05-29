@@ -44,6 +44,7 @@
     </table>
     <%
         if (returnSchedules != null) {
+            if (!returnSchedules.isEmpty()){
     %>
     <h1>Return</h1>
     <table>
@@ -70,6 +71,11 @@
     </table>
     <input type="hidden" name="return" value="return">
     <%
+        }
+        %>
+   <br><br> <h2>sorry, no return schedule is found</h2>
+    <%
+
         }
         if(request.getAttribute("action")==null){
     %>
