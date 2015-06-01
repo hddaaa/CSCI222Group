@@ -24,6 +24,7 @@
 <link rel="stylesheet" type="text/css" href="css/fms.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <form class="form form-aligned" method="post" action="/TicketReservation">
+    <h1>Flight deatil</h1>
     <table class="table">
         <tr>
             <th>Flight ID</th>
@@ -79,6 +80,7 @@
     <input type="hidden" name="passageNum" value="<%=passageNum%>">
     <table class="table">
         <tr>
+            <td></td>
             <%
             for (int passage = 0; passage < passageNum; passage++) {
                 out.print("<td><h3>passage "+(passage+1)+"</h3></td>");
@@ -86,6 +88,7 @@
             %>
         </tr>
         <tr>
+            <td><h3>Choose Seat: </h3></td>
             <%
                 for (int passage = 0; passage < passageNum; passage++) {
                     out.print("<td><select name='seatNum"+passage+"'>");
@@ -172,6 +175,7 @@
     </table>
     <table class="table">
         <tr>
+            <td></td>
             <%
                 for (int passage = 0; passage < passageNum; passage++) {
                 out.print("<td><h3>passage "+(passage+1)+"</h3></td>");
@@ -179,6 +183,7 @@
             %>
         </tr>
         <tr>
+            <td><h3>Choose Seat: </h3></td>
             <%
                 for (int passage = 0; passage < passageNum; passage++) {
                 out.print("<td><select name='rseatNum"+passage+"'>");
