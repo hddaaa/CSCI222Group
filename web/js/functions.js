@@ -99,7 +99,7 @@ $(function() {
 	});
 	//Search flight form
 	$("#return").click(function() {
-		if($(this).parent().find('input').is(':checked')) {
+		if($(this).is(':checked')) {
 			$("#return_date").removeAttr("disabled");
 			$(".bookflightreturntable").css('display', 'table');
 		} else {
