@@ -9,10 +9,6 @@
 <html>
 <head>
     <title>Add New Service Inventory</title>
-    <link rel="stylesheet" href="css/fms.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<script src="js/functions.js"></script>
 </head>
 <body>
 <form class="form form-aligned" method="post" action="/AEDServiceInventory">
