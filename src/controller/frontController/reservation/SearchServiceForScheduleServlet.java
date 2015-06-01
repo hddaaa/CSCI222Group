@@ -31,9 +31,10 @@ public class SearchServiceForScheduleServlet extends HttpServlet {
             serviceList=ReservationSystem.getServiceNotInTicket(ticketId);
         }else {
             HttpSession session = request.getSession();
-            Ticket ticket = (Ticket) session.getAttribute("ticket");
+            Ticket ticket = (Ticket) session.getAttribute("ticket0");
             serviceList = ReservationSystem.getServiceForSchedule(ticket.getScheduleId());
-
+            request.setAttribute("return",request.getSession().getAttribute("return"));
+            request.setAttribute("passageNum",request.getSession().getAttribute("passageNum"));
         }
         request.setAttribute("serviceList", serviceList);
         request.getRequestDispatcher("showSearchServiceResult.jsp").forward(request, response);

@@ -2,6 +2,7 @@ package controller.frontController.reservation;
 
 import controller.subSystemFunction.ReservationSystem;
 import model.entity.Schedule;
+import util.common.ParseDateUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,18 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
- * Created by hdd on 29/05/15.
+ * Created by hdd on 1/06/15.
  */
-@WebServlet(name = "SearchScheduleForModifyServlet", urlPatterns = {"/SearchScheduleForModify"})
-public class SearchScheduleForModifyServlet extends HttpServlet {
+@WebServlet(name = "SearchScheduleForChangeFlightServlet", urlPatterns = {"/SearchScheduleForChangeFlight"})
+public class SearchScheduleForChangeFlightServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String sourceAirport = request.getParameter("sourceAirport");
         String destinationAirport = request.getParameter("destinationAirport");
-        List<Schedule> schedules = ReservationSystem.searchScheduleForModify(sourceAirport,destinationAirport);
-        request.setAttribute("action","modify");
+        Date departureDate= ParseDateUtil.parseDate(request.getParameter("departureDate"));
+        List<Schedule> schedules = ReservationSystem.searchSchedule(sourceAirport, destinationAirport,departureDate);
+        request.setAttribute("action", "change");
         request.setAttribute("schedules", schedules);
         request.setAttribute("sourceAirport", ReservationSystem.airportDetail(sourceAirport));
         request.setAttribute("destinationAirport", ReservationSystem.airportDetail(destinationAirport));
@@ -28,7 +31,7 @@ public class SearchScheduleForModifyServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("action","modify");
-        request.getRequestDispatcher("/searchScheduleForm.jsp").forward(request,response);
+        request.setAttribute("action", "change");
+        request.getRequestDispatcher("/searchScheduleForm.jsp").forward(request, response);
     }
 }

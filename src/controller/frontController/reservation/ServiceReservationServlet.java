@@ -17,20 +17,51 @@ import java.io.IOException;
 @WebServlet(name = "ServiceReservationServlet", urlPatterns = {"/ServiceReservation"})
 public class ServiceReservationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String[] serviceAndCost = request.getParameterValues("services");
         HttpSession session = request.getSession();
-        Ticket ticket = (Ticket) session.getAttribute("ticket");
-        ticket = ReservationSystem.serviceReservation(serviceAndCost,ticket);
-        if(ticket!=null) {
-            session.removeAttribute("ticket");
-            request.getRequestDispatcher("success.jsp").forward(request, response);
+        if (request.getParameter("passageNum") == null) {
+            String[] serviceAndCost = request.getParameterValues("services");
+            Ticket ticket = (Ticket) session.getAttribute("ticket");
+            ticket = ReservationSystem.serviceReservation(serviceAndCost, ticket);
+            if (ticket != null) {
+                session.removeAttribute("ticket");
+                request.getRequestDispatcher("success.jsp").forward(request, response);
+            } else {
+                request.setAttribute("errorMessage", "reserve service error");
+                request.getRequestDispatcher("error.jsp").forward(request, response);
+            }
         }else {
-            request.setAttribute("errorMessage","reserve service error");
-            request.getRequestDispatcher("error.jsp").forward(request,response);
+            boolean error= false;
+            int passageNum = Integer.parseInt(request.getParameter("passageNum"));
+            for(int i=0;i<passageNum&&!error;i++){
+                String[] serviceAndCost = request.getParameterValues("services" + i);
+                Ticket ticket = (Ticket) session.getAttribute("ticket"+i);
+                ticket = ReservationSystem.serviceReservation(serviceAndCost, ticket);
+                if (ticket == null){
+                    error =true;
+                }
+
+            }
+            if(request.getParameter("return")!=null){
+                for(int i=0;i<passageNum&&!error;i++){
+                    String[] serviceAndCost = request.getParameterValues("rservices"+i);
+                    Ticket ticket = (Ticket) session.getAttribute("rticket"+i);
+                    ticket = ReservationSystem.serviceReservation(serviceAndCost, ticket);
+                    if (ticket == null){
+                        error =true;
+                    }
+
+                }
+            }
+            if (!error) {
+                session.removeAttribute("ticket");
+                request.getRequestDispatcher("success.jsp").forward(request, response);
+            } else {
+                request.setAttribute("errorMessage", "reserve service error");
+                request.getRequestDispatcher("error.jsp").forward(request, response);
+            }
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

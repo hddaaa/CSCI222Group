@@ -46,15 +46,18 @@ public class ShowAllMyBookingServlet extends HttpServlet {
         if(user==null){
             response.sendRedirect("index.jsp");
             return;
-        }else if(user.getAuthority()==UserAuthority.Customer) {
+        }else if(user.getAuthority()==UserAuthority.Customer && request.getParameter("booking")==null) {
             List<Map<String, String>> bookingsList = ReservationSystem.getAllBookingsFromACustomer(user.getUsername());
             request.setAttribute("bookingsList", bookingsList);
             if (request.getParameter("action").equals("service"))
                 request.setAttribute("service", true);
             request.getRequestDispatcher("showAllMyBooking.jsp").forward(request, response);
-        }else {
-            request.setAttribute("errorMessage","show bookings wrong: wrong authority");
-            request.getRequestDispatcher("error.jsp").forward(request,response);
+        }else{
+            List<Map<String, String>> bookingsList = ReservationSystem.getAllBookingsFromAUser(user.getUsername());
+            request.setAttribute("bookingsList", bookingsList);
+            if (request.getParameter("action").equals("service"))
+                request.setAttribute("service", true);
+            request.getRequestDispatcher("showAllMyBooking.jsp").forward(request, response);
         }
     }
 }

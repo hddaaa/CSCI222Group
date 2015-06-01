@@ -48,13 +48,17 @@
               out.print("<option value='" + a.getIATA_FAA() + "'>" + a.getCity() + ", " + a.getCountry() + "</option>");%>
         </select>
       </div>
-      <%if (request.getAttribute("action")==null){
+      <%if (request.getAttribute("action")==null||request.getAttribute("action").equals("change")){
 
       %>
       <div class="control-group">
         <label for="depart_date">Departure Date</label>
         <input id="depart_date" type="date" name="departureDate">
       </div>
+      <%
+        }
+        if(request.getAttribute("action")==null){
+      %>
       <div class="control-group">
         <label for="return">Return Flight?</label>
         <input id="return" type="checkbox" name="isReturn" value="return">
@@ -65,15 +69,25 @@
       </div>
       <div class="control-group">
         <label for="passengers">Number of Passengers</label>
-        <input id="passengers" type="number" min="1" value="1" name="passageNum">
+        <select id="passengers" name="passageNum">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
       </div>
       <div class="controls">
         <input type="submit" class="button button-primary" value="Submit" formaction="/SearchSchedule" formmethod="post">
       </div>
           <%
-            }else {
+            }else if (request.getAttribute("action").equals("modify")){
           %>
       <input type="submit" class="button button-primary" value="Submit" formaction="/SearchScheduleForModify" formmethod="post">
+      <%
+        }else if (request.getAttribute("action").equals("change")){
+      %>
+      <input type="submit" class="button button-primary" value="Submit" formaction="/SearchScheduleForChangeFlight" formmethod="post">
       <%
         }
       %>

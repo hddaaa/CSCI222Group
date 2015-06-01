@@ -14,10 +14,10 @@
     List<Schedule> returnSchedules = (List<Schedule>) request.getAttribute("returnSchedules");
     Airport sourceAirport = (Airport) request.getAttribute("sourceAirport");
     Airport destinationAirport = (Airport) request.getAttribute("destinationAirport");
-    if(schedules!=null){
+    if (schedules != null && !schedules.isEmpty()) {
 %>
-	<link rel="stylesheet" type="text/css" href="css/fms.css">
-	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/fms.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <form>
     <h1>Schedule</h1>
     <table>
@@ -44,7 +44,7 @@
     </table>
     <%
         if (returnSchedules != null) {
-            if (!returnSchedules.isEmpty()){
+            if (!returnSchedules.isEmpty()) {
     %>
     <h1>Return</h1>
     <table>
@@ -71,25 +71,32 @@
     </table>
     <input type="hidden" name="return" value="return">
     <%
-        }
-        %>
-   <br><br> <h2>sorry, no return schedule is found</h2>
-    <%
-
-        }
-        if(request.getAttribute("action")==null){
+        }else{
     %>
+    <br><br>
+
+    <h2>sorry, no return schedule is found</h2>
+    <%
+            }
+        }
+        if (request.getAttribute("action") == null) {
+    %>
+    <input type="hidden" name="passageNum" value="<%=(int)request.getAttribute("passageNum")%>">
     <input class="button button-primary" type="submit" value="next" formmethod="post" formaction="/ShowFlightDetail">
     <%
-        }else {
+    } else if (request.getAttribute("action").equals("modify")) {
     %>
     <input class="button button-primary" type="submit" value="next" formmethod="get" formaction="/ModifySchedule">
+    <%
+        }else if (request.getAttribute("action").equals("change")) {
+    %>
+    <input class="button button-primary" type="submit" value="next" formmethod="get" formaction="/ChangeFlight">
     <%
         }
     %>
 </form>
 <%
-    }else {
+} else {
 %>
 <h2>sorry, no schedule is found</h2>
 <%

@@ -22,6 +22,7 @@ import java.util.Map;
 public class ShowFlightDetailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
+        int passageNum = Integer.parseInt(request.getParameter("passageNum"));
         Schedule schedule = ReservationSystem.scheduleDetail(scheduleId);
         Fleet fleet = ReservationSystem.fleetDetail(schedule.getPlane());
         Route route = ReservationSystem.routeDetail(schedule.getRoute());
@@ -43,6 +44,29 @@ public class ShowFlightDetailServlet extends HttpServlet {
         request.setAttribute("sourceAirport", sourceAirport);
         request.setAttribute("destinationAirport", destinationAirport);
         request.setAttribute("pricemap", priceMap);
+        request.setAttribute("passageNum",passageNum);
+        if(request.getParameter("return")!=null){
+            int rscheduleId = Integer.parseInt(request.getParameter("returnScheduleId"));
+            Schedule rschedule = ReservationSystem.scheduleDetail(rscheduleId);
+            Fleet rfleet = ReservationSystem.fleetDetail(rschedule.getPlane());
+            Route rroute = ReservationSystem.routeDetail(rschedule.getRoute());
+            SeatMap rmap = ReservationSystem.showSeatMap(rscheduleId);
+            Airport rsourceAirport = ReservationSystem.airportDetail(rroute.getSourceAirport());
+            Airport rdestinationAirport = ReservationSystem.airportDetail(rroute.getDestinationAirport());
+
+            Map<String, Integer> rpriceMap = ReservationSystem.getPriceList(rroute, agentEmail);
+            request.setAttribute("rschedule", rschedule);
+            request.setAttribute("rfleet", rfleet);
+            request.setAttribute("rroute", rroute);
+            request.setAttribute("rseatmap", rmap);
+            request.setAttribute("rsourceAirport", rsourceAirport);
+            request.setAttribute("rdestinationAirport", rdestinationAirport);
+            request.setAttribute("rpricemap", rpriceMap);
+            request.setAttribute("return",true);
+        }
+
+
+
         if (request.getSession().getAttribute("user")==null){
             request.setAttribute("nextStep","flightDetail");
             request.getRequestDispatcher("searchScheduleWithoutLogin.jsp").forward(request, response);

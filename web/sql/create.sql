@@ -53,6 +53,8 @@ CREATE TABLE user(
 
 INSERT INTO customer (title,first_name,last_name,gender,DOB,Phone,email,street_address,state,city,country,credit_card_type,credit_card_num,frequent_flier_points_,passport_holder,is_fly,Travel_Agent) VALUE ('Mr','Siyuan','Hou','Male','1989-07-25','5-(218)776-8651','hhh@ggg.com','213 Northwestern Court',NULL,'Qinghai','China','visa','3544701816091840',0,1,NULL,NULL);
 INSERT INTO user (username,pwd,authority,availability) VALUE ('hhh@ggg.com',MD5('hhh'),'Customer',1);
+INSERT INTO customer (title,first_name,last_name,gender,DOB,Phone,email,street_address,state,city,country,credit_card_type,credit_card_num,frequent_flier_points_,passport_holder,is_fly,Travel_Agent) VALUE ('Mr','Steven','Jobs','Male','1989-07-25','5-(218)776-8651','ddd@ggg.com','213 Northwestern Court',NULL,'Qinghai','China','visa','3544701816091840',0,1,NULL,NULL);
+INSERT INTO user (username,pwd,authority,availability) VALUE ('ddd@ggg.com',MD5('hhh'),'Customer',1);
 INSERT INTO user (username,pwd,authority,availability) VALUE ('bbanks9@simplemachines.org',MD5('hhh'),'Agent',1);
 INSERT INTO user (username,pwd,authority,availability) VALUE ('st',MD5('hhh'),'Staff',1);
 INSERT INTO user (username,pwd,authority,availability) VALUE ('sm',MD5('hhh'),'ServiceManager',1);

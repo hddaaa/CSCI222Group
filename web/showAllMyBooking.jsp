@@ -14,6 +14,7 @@
 
     if (request.getAttribute("service")!=null)
         service = (boolean) request.getAttribute("service");
+    if(bookingsList!=null&&!bookingsList.isEmpty()){
 %>
 	<link rel="stylesheet" type="text/css" href="css/fms.css">
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
@@ -58,3 +59,10 @@
         }
     %>
 </table>
+<%
+    }else{
+%>
+<h2>no booking is found</h2>
+<%
+    }
+%>

@@ -27,16 +27,16 @@ public class SearchScheduleServlet extends HttpServlet {
         String sourceAirport = request.getParameter("sourceAirport");
         String destinationAirport = request.getParameter("destinationAirport");
         String[] isReturn = request.getParameterValues("isReturn");
-        request.getSession().setAttribute("return",null);
         Date departureDate=ParseDateUtil.parseDate(request.getParameter("departureDate"));
         List<Schedule> schedules = ReservationSystem.searchSchedule(sourceAirport, destinationAirport, departureDate);
         request.setAttribute("schedules", schedules);
         if(isReturn!=null){
             Date returnDate = ParseDateUtil.parseDate(request.getParameter("returnDate"));
             List<Schedule> returnSchedules = ReservationSystem.searchSchedule(destinationAirport, sourceAirport, returnDate);
-            request.getSession().setAttribute("return","return");
             request.setAttribute("returnSchedules", returnSchedules);
         }
+        int passageNum = Integer.parseInt(request.getParameter("passageNum"));
+        request.setAttribute("passageNum",passageNum);
         request.setAttribute("sourceAirport", ReservationSystem.airportDetail(sourceAirport));
         request.setAttribute("destinationAirport", ReservationSystem.airportDetail(destinationAirport));
         if (request.getSession().getAttribute("user")==null){

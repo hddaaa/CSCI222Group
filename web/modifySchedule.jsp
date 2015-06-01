@@ -37,7 +37,7 @@
 <body>
 <form class="form form-aligned" method="post" action="/ModifySchedule">
   <fieldset>
-    <legend>Add a new schedule</legend>
+    <legend>edit schedule</legend>
     <input type="hidden" name="scheduleId" value="<%=schedule.getId()%>">
     <div class="control-group">
       <label for="plane">Plane</label>

@@ -214,7 +214,7 @@ public class ReservationSystem {
             if (customerEmail != null) {
                 customer = CustomerDao.getCustomerByEmail(customerEmail);
             } else {
-                customer = CustomerDao.getCustomerByEmail(ticket.getUsername());
+                return null;
             }
             ticket.setCustomerId(customer.getId());
             SeatMap seatMap = SeatMapDao.getSeatMap(ticket.getScheduleId());
@@ -313,7 +313,38 @@ public class ReservationSystem {
             if (bookingsList.size() > 0)
                 return bookingsList;
         } catch (DataNotFoundException e) {
-            e.printStackTrace();
+            return null;
+        }
+        return null;
+    }
+
+    public static List<Map<String, String>> getAllBookingsFromAUser(String username) {
+        try {
+
+            List<Ticket> ticketList = TicketDao.getAllTicketFormAUser(username);
+            List<Map<String, String>> bookingsList = new ArrayList<>();
+            for (Ticket ticket : ticketList) {
+                Map<String, String> bookingMap = new HashMap<>();
+                bookingMap.put("ticketId", "" + ticket.getId());
+                bookingMap.put("totalCost", "" + ticket.getTotal());
+                bookingMap.put("serviceCost", "" + ticket.getServiceCost());
+                bookingMap.put("flightCost", "" + ticket.getFlightCost());
+                bookingMap.put("fareClass", "" + ticket.getFareClass());
+                bookingMap.put("seat", "" + (ticket.getSeat()+1));
+                Schedule schedule = ScheduleDao.getSchedule(ticket.getScheduleId());
+                Route route = RouteDao.getRoute(schedule.getRoute());
+                Airport sourceAirport = AirportDao.getAirport(route.getSourceAirport());
+                Airport destinationAirport = AirportDao.getAirport(route.getDestinationAirport());
+                bookingMap.put("sourceAirport", sourceAirport.getCity());
+                bookingMap.put("destinationAirport", destinationAirport.getCity());
+                bookingMap.put("departTime", ParseDateUtil.formatDate(schedule.getDepartTime(), sourceAirport.getDatabase_timezone()));
+                bookingMap.put("arriveTime", ParseDateUtil.formatDate(schedule.getArrivedTime(), destinationAirport.getDatabase_timezone()));
+                bookingsList.add(bookingMap);
+            }
+            if (bookingsList.size() > 0)
+                return bookingsList;
+        } catch (DataNotFoundException e) {
+            return null;
         }
         return null;
     }
@@ -415,27 +446,27 @@ public class ReservationSystem {
         return false;
     }
 
-    public static Ticket changeFlight(Ticket oldTicket, Ticket newTicket) {
+    public static Ticket changeFlight(Ticket oldTicket,String newUsername, int newScheduleId, int newSeatNum, String newFareClass,String agentEmail) {
 
         try {
             SeatMap oldSeatMap = SeatMapDao.getSeatMap(oldTicket.getScheduleId());
-            SeatMap newSeatMap = SeatMapDao.getSeatMap(newTicket.getScheduleId());
+            SeatMap newSeatMap = SeatMapDao.getSeatMap(newScheduleId);
             List<Integer> oldMap = oldSeatMap.getMap();
             List<Integer> newMap = newSeatMap.getMap();
             oldMap.set(oldTicket.getSeat(), 0);
-            newMap.set(newTicket.getSeat(), newTicket.getCustomerId());
+            newMap.set(newSeatNum, oldTicket.getCustomerId());
             oldSeatMap.setMap(oldMap);
             newSeatMap.setMap(newMap);
             SeatMapDao.updateSeatMap(oldSeatMap);
             SeatMapDao.updateSeatMap(newSeatMap);
-            List<Service> serviceList = ServiceDao.getServicesInATicket(oldTicket.getId());
-            for (Service service : serviceList) {
-                service.setTicketId(newTicket.getId());
-                ServiceDao.updateService(service);
-            }
-            TicketDao.delTicket(oldTicket.getId());
-            TicketDao.addTicket(newTicket);
-            return newTicket;
+            oldTicket.setUsername(newUsername);
+            oldTicket.setScheduleId(newScheduleId);
+            oldTicket.setSeat(newSeatNum);
+            oldTicket.setFareClass(newFareClass);
+            oldTicket.setFlightCost(ReservationSystem.getPrice(newScheduleId, newFareClass, agentEmail));
+            oldTicket.setTotal(oldTicket.getFlightCost()+oldTicket.getServiceCost());
+            if(TicketDao.updateTicket(oldTicket))
+                return oldTicket;
         } catch (DataNotFoundException e) {
             e.printStackTrace();
         }

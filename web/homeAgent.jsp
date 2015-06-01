@@ -73,7 +73,8 @@
       <div class="nav_pane">
         <ul id="t2_1" class="active">
           <li id="res_1" class="active"><a href='searchScheduleForm.jsp' target="iframe" class="push_button blue">Search for Flight</a></li>
-          <li id="res_2"><a href='/GetCustomerEmail?action=info' target="iframe" class="push_button blue">My Bookings</a></li>
+          <li id="res_2"><a href='/GetCustomerEmail?action=flight' target="iframe" class="push_button blue">Customer Bookings</a></li>
+          <li id="res_4"><a href='/ShowAllMyBookings?action=flight' target="iframe" class="push_button blue">My Bookings</a></li>
         </ul>
         <ul id="t2_2">
           <li id="pro_1"><a href='/AccountInfo' target="iframe" class="push_button blue">Account Settings</a></li>

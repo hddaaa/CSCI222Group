@@ -66,7 +66,8 @@
       <div class="nav_pane">
         <ul id="t2_1" class="active">
           <li id="res_1" class="active"><a href='searchScheduleForm.jsp' target="iframe" class="push_button blue">Search for Flight</a></li>
-          <li id="res_2"><a href='/ShowAllMyBookings?action=flight' target="iframe" class="push_button blue">My Bookings</a></li>
+          <li id="res_2"><a href='/ShowAllMyBookings?action=flight' target="iframe" class="push_button blue">My Tickets</a></li>
+          <li id="res_3"><a href='/ShowAllMyBookings?action=flight&booking=booking' target="iframe" class="push_button blue">My Bookings</a></li>
         </ul>
         <ul id="t2_2">
           <li id="pro_1"><a href='/AccountInfo' target="iframe" class="push_button blue">Account Settings</a></li>
@@ -83,7 +84,7 @@
       </div>
       <div class="inner_frame">
         <%
-          if (session.getAttribute("process")!=null&&session.getAttribute("process").equals("ticketReservation")){
+          if (session.getAttribute("getTicketInfo")!=null&&(boolean)session.getAttribute("getTicketInfo")==true){
             out.print("<iframe id='iframe' name='iframe' src='/TicketReservation' frameborder='0' scrolling='no' width='100%' onload='reset();' height='500px'></iframe>");
           }else{
             out.print("<iframe id='iframe' name='iframe' src='searchScheduleForm.jsp' frameborder='0' scrolling='no' width='100%' onload='reset();' height='500px'></iframe>");

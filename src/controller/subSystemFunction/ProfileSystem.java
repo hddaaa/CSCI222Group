@@ -146,4 +146,14 @@ public class ProfileSystem {
         return thisUser;
     }
 
+    public static String getCustomerName(int customerId){
+        try {
+            Customer customer = CustomerDao.getCustomer(customerId);
+            return customer.getFirstName()+" "+customer.getLastName();
+        } catch (DataNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "customer cannot find";
+    }
+
 }

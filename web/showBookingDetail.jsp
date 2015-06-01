@@ -103,4 +103,4 @@
     }
 %>
 
-<button type="button" onclick="window.location=''">change flight</button>
+<button type="button" onclick="window.location='/SearchScheduleForChangeFlight'">change flight</button>

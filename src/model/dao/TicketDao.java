@@ -106,6 +106,36 @@ public class TicketDao {
         }
     }
 
+    public static List<Ticket> getAllTicketFormAUser(String username) throws DataNotFoundException {
+        Connection conn = DBConnection.getConn();
+        try {
+            String sql = "SELECT * FROM ticket WHERE username=?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            ResultSet rs = preparedStatement.executeQuery();
+            List<Ticket> list = new ArrayList<Ticket>();
+            while (rs.next()) {
+                Ticket ticket = new Ticket();
+                ticket.setId(rs.getInt("id"));
+                ticket.setCustomerId(rs.getInt("customerId"));
+                ticket.setUsername(rs.getString("username"));
+                ticket.setScheduleId(rs.getInt("scheduleId"));
+                ticket.setFareClass(rs.getString("fareClass"));
+                ticket.setSeat(rs.getInt("seat"));
+                ticket.setFlightCost(rs.getInt("flightCost"));
+                ticket.setServiceCost(rs.getInt("serviceCost"));
+                ticket.setTotal(rs.getInt("total"));
+                list.add(ticket);
+            }
+            if (list.isEmpty())
+                throw new DataNotFoundException("TicketDao: getAllTicketFormACustomer");
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static List<Ticket> getAllTicketFormAgent(int agentId) throws DataNotFoundException {
         Connection conn = DBConnection.getConn();
         try {

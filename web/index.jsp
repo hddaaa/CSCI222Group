@@ -85,7 +85,13 @@
                 </div>
                 <div class="control-group">
                     <label for="passengers">Number of Passengers</label>
-                    <input id="passengers" type="number" min="1" value="1" name="passageNum">
+                    <select id="passengers" name="passageNum">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
                 </div>
                 <div class="controls">
                     <button type="submit" class="button button-primary">Submit</button>
