@@ -22,7 +22,7 @@
     <%
         if (request.getAttribute("passageNum") == null) {
     %>
-    <table>
+    <table class="table">
         <tr>
             <th>Item</th>
             <th>Price</th>
@@ -50,7 +50,7 @@
     %>
     <input type="hidden" name="passageNum" value="<%=passageNum%>">
 
-    <table>
+    <table class="table">
         <tr>
             <th>Item</th>
             <th>Price</th>
@@ -94,7 +94,7 @@
     <br>
     <br>
     <h2>return</h2>
-    <table>
+    <table class="table">
         <tr>
             <th>Item</th>
             <th>Price</th>

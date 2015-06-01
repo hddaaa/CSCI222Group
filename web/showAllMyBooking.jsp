@@ -18,7 +18,7 @@
 %>
 	<link rel="stylesheet" type="text/css" href="css/fms.css">
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-<table>
+<table class="table">
     <tr>
         <th>Source Airport</th>
         <th>Departure Time</th>

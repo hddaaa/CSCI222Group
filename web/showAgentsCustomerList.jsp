@@ -46,7 +46,7 @@
         });
 %>
 
-<table>
+<table class="table">
     <tr>
         <th>Title</th>
         <th>Name</th>

@@ -19,7 +19,7 @@
 %>
 	<link rel="stylesheet" type="text/css" href="css/fms.css">
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-<table>
+<table class="table">
     <tr>
         <th>Passage</th>
         <th>Email</th>
@@ -48,6 +48,7 @@
         <th>Flight Cost</th>
         <th>Service Cost</th>
         <th>Cost</th>
+        <th></th>
     </tr>
     <tr>
         <td><%=booking.get("fareClass")%>
@@ -60,6 +61,7 @@
         </td>
         <td><%=booking.get("totalCost")%>
         </td>
+        <td></td>
     </tr>
 </table>
 <form method="post" action="/ChangeSeat">
@@ -74,7 +76,7 @@
                 }
             %>
         </select>
-        <input type="submit" value="Change Seat">
+        <input type="submit" class="button button-primary" value="Change Seat">
     </fieldset>
 </form>
 
@@ -95,7 +97,7 @@
                 }
             %>
         </select>
-        <input type="submit" value="Switch Seat">
+        <input type="submit" class="button button-primary" value="Switch Seat">
     </fieldset>
 </form>
 
@@ -103,4 +105,4 @@
     }
 %>
 
-<button type="button" onclick="window.location='/SearchScheduleForChangeFlight'">change flight</button>
+<button type="button" class="button button-primary" onclick="window.location='/SearchScheduleForChangeFlight'">change flight</button>

@@ -22,7 +22,7 @@
 
 %>
 
-<table>
+<table class="table">
   <tr>
     <th>Service</th>
     <th>Cost</th>

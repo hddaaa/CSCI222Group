@@ -22,7 +22,7 @@
 <%
   if(request.getAttribute("action")==null){
 %>
-<table>
+<table class="table">
   <tr>
     <th>Service</th>
     <th>Cost</th>
@@ -42,7 +42,7 @@
 <%
   }else {
 %>
-<table>
+<table class="table">
   <tr>
     <th>Service</th>
     <th>Cost</th>

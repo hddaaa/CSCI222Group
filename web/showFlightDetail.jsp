@@ -24,7 +24,7 @@
 <link rel="stylesheet" type="text/css" href="css/fms.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <form method="post" action="/TicketReservation">
-    <table>
+    <table class="table">
         <tr>
             <th>Flight ID</th>
             <th>Source airport</th>
@@ -47,7 +47,7 @@
     </table>
     <input type="hidden" name="scheduleId" value="<%=schedule.getId()%>">
     <br>
-    <table>
+    <table class="table">
         <tr>
             <th>Airplane</th>
             <th>First Class</th>
@@ -77,7 +77,7 @@
     </table>
     <br>
     <input type="hidden" name="passageNum" value="<%=passageNum%>">
-    <table>
+    <table class="table">
         <tr>
             <%
             for (int passage = 0; passage < passageNum; passage++) {
@@ -115,7 +115,7 @@
         Airport rdestinationAirport = (Airport) request.getAttribute("rdestinationAirport");
     %>
     <input type="hidden" name="return" value="return">
-    <table>
+    <table class="table">
         <tr>
             <th>Flight ID</th>
             <th>Source airport</th>
@@ -138,7 +138,7 @@
     </table>
     <input type="hidden" name="rscheduleId" value="<%=rschedule.getId()%>">
     <br>
-    <table>
+    <table class="table">
         <tr>
             <th>Airplane</th>
             <th>First Class</th>
@@ -170,7 +170,7 @@
                 out.print(rseatMap.geteClassSpare() > 0 ? rpriceMap.get("EClass") + "<input type='radio' name='rfareClass' value='EClass'>" : "");%></td>
         </tr>
     </table>
-    <table>
+    <table class="table">
         <tr>
             <%
                 for (int passage = 0; passage < passageNum; passage++) {

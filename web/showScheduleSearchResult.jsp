@@ -20,7 +20,7 @@
 <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <form>
     <h1>Schedule</h1>
-    <table>
+    <table class="table">
         <tr>
             <th>Flight ID</th>
             <th>Source airport</th>
@@ -47,7 +47,7 @@
             if (!returnSchedules.isEmpty()) {
     %>
     <h1>Return</h1>
-    <table>
+    <table class="table">
         <tr>
             <th>Flight ID</th>
             <th>Source airport</th>

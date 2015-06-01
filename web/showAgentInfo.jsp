@@ -17,19 +17,19 @@
 <body>
 <form action="/UpdateAgentInfo" method="post">
   <fieldset>
-    <legend>Customer Info</legend>
+    <legend>Business Info</legend>
     <div class="control-group">
       <label for="name">Name</label>
       <input id="name" type="text" name="name" value="<%=agent.getName()%>"><br><br>
     </div>
 
     <div class="control-group">
-      <label for="email">first name:</label>
+      <label for="email">Email:</label>
       <input id="email" type="email" name="email" value="<%=agent.getEmail()%>"><br><br>
     </div>
 
     <div class="control-group">
-      <label for="phone">last name:</label>
+      <label for="phone">Phone:</label>
       <input id="phone" type="text" name="phone" value="<%=agent.getPhone()%>"><br><br>
     </div>
 

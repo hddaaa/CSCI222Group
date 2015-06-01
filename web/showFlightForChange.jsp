@@ -19,7 +19,7 @@
   Airport destinationAirport = (Airport) request.getAttribute("destinationAirport");
 %>
 <form method="post" action="/ChangeFlight">
-  <table>
+  <table class="table">
     <tr>
       <th>Flight ID</th>
       <th>Source airport</th>
@@ -42,7 +42,7 @@
   </table>
   <input type="hidden" name="scheduleId" value="<%=schedule.getId()%>">
   <br>
-  <table>
+  <table class="table">
     <tr>
       <th>Airplane</th>
       <th>First Class</th>

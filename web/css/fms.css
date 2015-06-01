@@ -383,19 +383,28 @@ caption {
 	border: 1px solid #cbcbcb;
 	margin: 0 auto;
 }
-.table thead {
+.table thead{
 	background-color: #e0e0e0;
 	color: #000;
 	text-align: left;
 	vertical-align: bottom;
+	border-bottom: 1px solid #cbcbcb;
+
 }
 .table td:first-child, .table th:first-child {
 	border-left-width: 0px;
 }
-.table td, .table th {
+.table td {
 	padding: 0.5em 1em;
 	border-left: 1px solid #cbcbcb;
-	border-width: 0 0 0 1px;
+	font-size: inherit;
+	margin: 0;
+	overflow: visible;
+}
+.table th{
+	padding: 0.5em 1em;
+	border-left: 1px solid #cbcbcb;
+	border-bottom: 1px solid #cbcbcb;
 	font-size: inherit;
 	margin: 0;
 	overflow: visible;
