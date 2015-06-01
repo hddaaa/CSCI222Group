@@ -17,7 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 </head>
 <body>
-<form action="/UpdateCustomerInfo" method="post">
+<form class="form form-aligned" action="/UpdateCustomerInfo" method="post">
   <fieldset>
     <legend>Credit Card Info</legend>
     <div class="control-group">

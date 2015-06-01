@@ -15,7 +15,7 @@
     <title></title>
 </head>
 <body>
-<form action="/UpdateAgentInfo" method="post">
+<form class="form form-aligned" action="/UpdateAgentInfo" method="post">
   <fieldset>
     <legend>Business Info</legend>
     <div class="control-group">

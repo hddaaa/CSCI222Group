@@ -18,7 +18,7 @@
 %>
 <link rel="stylesheet" type="text/css" href="css/fms.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-<form>
+<form class="form form-aligned">
     <h1>Schedule</h1>
     <table class="table">
         <tr>

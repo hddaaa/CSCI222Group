@@ -64,7 +64,7 @@
         <td></td>
     </tr>
 </table>
-<form method="post" action="/ChangeSeat">
+<form class="form form-aligned" method="post" action="/ChangeSeat">
     <fieldset>
         <legend>Change Seat</legend>
         <select name="seatNum">
@@ -84,7 +84,7 @@
 
     if(user.getAuthority().compareTo(UserAuthority.Staff)>=0){
 %>
-<form method="post" action="/SwitchSeat">
+<form class="form form-aligned" method="post" action="/SwitchSeat">
     <fieldset>
         <legend>Change Seat</legend>
         <select name="newSeatNum">

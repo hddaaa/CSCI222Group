@@ -23,7 +23,7 @@
 %>
 <link rel="stylesheet" type="text/css" href="css/fms.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-<form method="post" action="/TicketReservation">
+<form class="form form-aligned" method="post" action="/TicketReservation">
     <table class="table">
         <tr>
             <th>Flight ID</th>

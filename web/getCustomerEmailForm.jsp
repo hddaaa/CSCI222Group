@@ -9,12 +9,14 @@
 <html>
 <head>
     <title> customer id</title>
+    <link rel="stylesheet" type="text/css" href="css/fms.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 </head>
 <body>
 <%
     if (request.getAttribute("action") != null) {
 %>
-<form>
+<form class="form form-aligned">
     <fieldset>
         <legend>Customer ID</legend>
         <div class="control-group">

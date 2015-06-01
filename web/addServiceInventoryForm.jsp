@@ -11,7 +11,7 @@
     <title>Add New Service Inventory</title>
 </head>
 <body>
-<form method="post" action="/AEDServiceInventory">
+<form class="form form-aligned" method="post" action="/AEDServiceInventory">
   <fieldset>
     <legend>Add New Service Inventory</legend>
     <div class="control-group">

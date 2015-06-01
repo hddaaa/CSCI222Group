@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 	<link rel="stylesheet" type="text/css" href="css/fms.css">
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-<div class="box login">
+<div>
     <h2>Login</h2>
 
     <form class="form form-aligned" method="post" action="/Login">

@@ -18,7 +18,7 @@
   Airport sourceAirport = (Airport) request.getAttribute("sourceAirport");
   Airport destinationAirport = (Airport) request.getAttribute("destinationAirport");
 %>
-<form method="post" action="/ChangeFlight">
+<form class="form form-aligned" method="post" action="/ChangeFlight">
   <table class="table">
     <tr>
       <th>Flight ID</th>

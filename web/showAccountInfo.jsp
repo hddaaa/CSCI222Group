@@ -16,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 </head>
 <body>
-<form method="post" action="/AccountInfo">
+<form class="form form-aligned" method="post" action="/AccountInfo">
   <fieldset>
     <legend>Account Info</legend>
     <div class="control-group">

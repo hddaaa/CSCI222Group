@@ -18,7 +18,7 @@
         List<ServiceInventory> serviceList = (List<ServiceInventory>) request.getAttribute("serviceList");
 
 %>
-<form method="post" action="/ServiceReservation">
+<form class="form form-aligned" method="post" action="/ServiceReservation">
     <%
         if (request.getAttribute("passageNum") == null) {
     %>
@@ -134,7 +134,7 @@
             }
         }
     %>
-    <input type="submit" value="Add to my Ticket">
+    <input class="button button-primary" type="submit" value="Add to my Ticket">
 </form>
 <%
 

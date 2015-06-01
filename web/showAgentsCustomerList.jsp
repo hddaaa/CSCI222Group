@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 </head>
 <body>
-<form method="post" action="/AEDCustomerInAgent">
+<form class="form form-aligned" method="post" action="/AEDCustomerInAgent">
     <fieldset>
         <legend>Add New Customer to Agent List</legend>
         <div class="control-group">

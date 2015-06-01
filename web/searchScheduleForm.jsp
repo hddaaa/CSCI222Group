@@ -27,7 +27,7 @@
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 </head>
 <body>
-<div class="box searchflight">
+<div>
   <h2>Search Flights</h2>
 
   <form class="form form-aligned">
