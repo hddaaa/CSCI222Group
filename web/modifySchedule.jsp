@@ -33,6 +33,10 @@
 <html>
 <head>
   <title></title>
+  	<link rel="stylesheet" type="text/css" href="css/fms.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="js/functions.js"></script>
 </head>
 <body>
 <form class="form form-aligned" method="post" action="/ModifySchedule">
