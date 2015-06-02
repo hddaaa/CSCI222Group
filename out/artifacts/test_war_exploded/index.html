@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sunset Airways - Home</title>
+	<link rel="stylesheet" href="css/fms.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body class="main">
+	<div class="container" style="margin-top:50px;">
+		<h1 style="font-size:3em;text-align:center;"><i class="fa fa-plane"></i> Sunset Airways</h1>
+		<div class="box searchflight">
+			<h2>Search Flights</h2>
+			<form class="form form-aligned">
+				<fieldset>
+					<div class="control-group">
+						<label for="origin">Origin</label>
+						<select id="origin">
+							<option value="SYD">SYDNEY, Australia</option>
+							<option value="MEL">MELBOURNE, Australia</option>
+							<option value="ADL">ADELAIDE, Australia</option>
+							<option value="BNE">BRISBANE, Australia</option>
+							<option value="HBA">HOBART, Australia</option>
+							<option value="PER">PERTH, Australia</option>
+						</select>
+					</div>
+					<div class="control-group">
+						<label for="destination">Destination</label>
+						<select id="destination">
+							<option value="SYD">SYDNEY, Australia</option>
+							<option value="MEL">MELBOURNE, Australia</option>
+							<option value="ADL">ADELAIDE, Australia</option>
+							<option value="BNE">BRISBANE, Australia</option>
+							<option value="HBA">HOBART, Australia</option>
+							<option value="PER">PERTH, Australia</option>
+						</select>
+					</div>
+					<div class="control-group">
+						<label for="depart_date">Departure Date</label>
+						<input id="depart_date" type="date">
+					</div>
+					<div class="control-group">
+						<label for="return">Return Flight?</label>
+						<input id="return" type="checkbox">
+					</div>
+					<div class="control-group">
+						<label for="return_date">Return Date</label>
+						<input id="return_date" type="date">
+					</div>
+					<div class="control-group">
+						<label for="passengers">Number of Passengers</label>
+						<input id="passengers" type="number" min="1" value="1">
+					</div>
+					<div class="controls">
+						<button type="submit" class="button button-primary">Submit</button>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div id="divider">
+			<p> or </p>
+		</div>
+		<div class="box login">
+			<h2>Login</h2>
+			<form class="form form-aligned">
+				<fieldset>
+					<div class="control-group">
+						<label for="username">Username</label>
+						<input id="username" type="text" placeholder="Username">
+					</div>
+					<div class="control-group">
+						<label for="password">Password</label>
+						<input id="password" type="password">
+					</div>
+					<div class="controls">
+						<button type="submit" class="button button-primary">Login</button>
+						<button type="button" class="button button-primary">Register</button>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

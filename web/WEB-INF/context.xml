@@ -5,8 +5,8 @@
               type="javax.sql.DataSource"
               driverClassName="com.mysql.jdbc.Driver"
               url="jdbc:mysql://localhost:3306/DB222"
-              username="sh517"
-              password="hsyhdd"
+              username="root"
+              password="root"
               maxActive="20"
               maxIdle="10"
               maxWait="10000"/>
